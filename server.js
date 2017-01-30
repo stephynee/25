@@ -4,11 +4,29 @@ var app = express(),
     port = 8080,
     ip = 'localhost';
 
-//what does this do? why do I always need to set this up?
 app.use(express.static(__dirname + '/public'));
 
 var tempData = [
-
+  {
+    task: 'Programming',
+    tally: 10
+  },
+  {
+    task: 'Drawing',
+    tally: 2
+  },
+  {
+    task: 'Writing',
+    tally: 5
+  },
+  {
+    task: 'Reading',
+    tally: 1
+  },
+  {
+    task: 'Studying',
+    tally: 12
+  }
 ];
 
 app.get('/api/tallies', function(req, res) {
