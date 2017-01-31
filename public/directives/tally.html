@@ -1,9 +1,14 @@
 <div class="tally color-purple">
-  <i class="fa fa-info-circle" aria-hidden="true"></i>
+  <i class="fa fa-info-circle" aria-hidden="true" ng-click="ctrl.showInfo(data.id)"></i>
+  <div class="info" ng-if="ctrl.showingInfo[data.id]">
+    <i class="fa fa-clock-o" aria-hidden="true"></i>
+    <i class="fa fa-bar-chart" aria-hidden="true"></i>
+    <i class="fa fa-pencil" aria-hidden="true"></i>
+  </div>
   <h2>{{data.task}}</h2>
   <div class="tally-num">
     <i class="fa fa-minus-circle" aria-hidden="true"></i>
-    <span>{{data.tally}}</span>
+    <span>{{(data.tally < 10) ? '0' + data.tally : data.tally}}</span>
     <i class="fa fa-plus-circle" aria-hidden="true"></i>
   </div>
 </div>

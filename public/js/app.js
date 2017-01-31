@@ -16,7 +16,18 @@ app.directive('tally', [function() {
     scope: {
       data: '=data'
     },
-    templateUrl: '/directives/tally.html'
+    templateUrl: '/directives/tally.html',
+    controller: 'singleTallyCtrl as ctrl'
+  }
+}]);
+
+app.controller('singleTallyCtrl', [function() {
+  var vm = this;
+
+  vm.showingInfo = {};
+
+  vm.showInfo = function(tallyId, e) {
+    vm.showingInfo[tallyId] = vm.showingInfo[tallyId] ? false: true;
   }
 }]);
 
