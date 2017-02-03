@@ -255,7 +255,11 @@ html {
     left: 465px;
   }
 
+  .tally {
+    margin-right: 10px;
+  }
+
   .container {
-    justify-content: space-between;
+    justify-content: flex-start;
   }
 }
