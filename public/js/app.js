@@ -47,7 +47,7 @@
     vm.show = false;
     vm.tallyName = '';
     vm.colors = ['color-red', 'color-yellow', 'color-green', 'color-seafoam', 'color-lightblue', 'color-blue', 'color-purple', 'color-pink', 'color-darkpink'];
-    vm.selectedColor = '';
+    vm.selectedColor = 'color-white';
 
     vm.openClose = function() {
       vm.show = !vm.show;
@@ -62,6 +62,7 @@
       tallyFactory.addTally(data).then(data => {
         $rootScope.$broadcast('tallyAdded', data.data);
         vm.openClose();
+        vm.selectedColor = 'color-white';
       });
     };
 
