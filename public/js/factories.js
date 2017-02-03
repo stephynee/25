@@ -1,5 +1,6 @@
 (function() {
   angular.module('tally25')
+
   .factory('tallyFactory', ['$http', function($http) {
     var factory = {
       getTallies: function() {

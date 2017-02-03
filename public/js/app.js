@@ -59,7 +59,10 @@
         color: vm.selectedColor
       };
 
-      tallyFactory.addTally(data).then(() => vm.openClose());
+      tallyFactory.addTally(data).then(data => {
+        $rootScope.$broadcast('tallyAdded', data.data);
+        vm.openClose();
+      });
     };
 
     vm.selectColor = function(color) {
@@ -71,12 +74,14 @@
 
   // //////////////////////////////
 
-  .controller('tallyCtrl', ['tallyFactory', function(tallyFactory) {
+  .controller('tallyCtrl', ['tallyFactory', '$rootScope', function(tallyFactory, $rootScope) {
     var vm = this;
 
     tallyFactory.getTallies().then(data => {
       vm.data = data.data;
     });
+
+    $rootScope.$on('tallyAdded', (e, data) => vm.data.push(data));
   }])
 
   .controller('headerCtrl', ['$rootScope', function($rootScope) {
