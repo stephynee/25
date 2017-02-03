@@ -1,13 +1,14 @@
-var express = require('express'),
-    bodyParser = require('body-parser');
+const path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-var app = express(),
-    port = 8080,
-    ip = 'localhost';
+const app = express();
+const port = 8080;
+const ip = 'localhost';
 
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, '/public')));
 
 var tempData = [
   {
@@ -43,6 +44,7 @@ app.get('/api/tallies', function(req, res) {
 
 app.post('/api/tallies', function(req, res) {
   var data = req.body.data;
+  console.log(data);
   res.json('success');
 });
 
