@@ -8,7 +8,7 @@
       .state('tallies', {
         url: '/',
         templateUrl: '/views/tallies.html',
-        controller: 'tallyCtrl as ctrl'
+        controller: 'tallyCtrl as tallyCtrl'
       });
   }])
 
@@ -18,21 +18,21 @@
         data: '=data'
       },
       templateUrl: '/directives/tally.html',
-      controller: 'singleTallyCtrl as ctrl'
+      controller: 'singleTallyCtrl as singleCtrl'
     };
   }])
 
   .directive('addTally', [function() {
     return {
       templateUrl: '/directives/addtally.html',
-      controller: 'addTallyCtrl as ctrl'
+      controller: 'addTallyCtrl as addCtrl'
     };
   }])
 
   .directive('editTally', [function() {
     return {
       templateUrl: '/directives/edittally.html',
-      controller: 'editTallyCtrl as ctrl'
+      controller: 'editTallyCtrl as editCtrl'
     };
   }])
 
@@ -47,18 +47,22 @@
       vm.showingInfo[tallyId] = !vm.showingInfo[tallyId];
     };
 
-    vm.editTally = function(tallyId) {
-      $rootScope.$broadcast('editTally', {tallyId: tallyId});
+    vm.editTally = function(tally) {
+      $rootScope.$broadcast('editTally', {tallyData: tally});
     };
   }])
 
-  .controller('addTallyCtrl', ['$rootScope', 'tallyFactory', function($rootScope, tallyFactory) {
+  .controller('addTallyCtrl', ['$rootScope', 'tallyFactory', 'colorFactory', function($rootScope, tallyFactory, colorFactory) {
     var vm = this;
 
     vm.show = false;
     vm.tallyName = '';
-    vm.colors = ['color-red', 'color-yellow', 'color-green', 'color-seafoam', 'color-lightblue', 'color-blue', 'color-purple', 'color-pink', 'color-darkpink'];
+    vm.colors = colorFactory.getColors();
     vm.selectedColor = 'color-white';
+
+    vm.openClose = function() {
+      vm.show = !vm.show;
+    };
 
     vm.addTally = function() {
       let data = {
@@ -68,7 +72,7 @@
 
       tallyFactory.addTally(data).then(data => {
         $rootScope.$broadcast('tallyAdded', data.data);
-        vm.show = !vm.show;
+        vm.openClose();
         vm.selectedColor = 'color-white';
       });
     };
@@ -77,19 +81,48 @@
       vm.selectedColor = color;
     };
 
-    $rootScope.$on('addTally', () => {
-      vm.show = !vm.show;
-    });
+    $rootScope.$on('addTally', vm.openClose);
   }])
 
-  .controller('editTallyCtrl', ['$rootScope', function($rootScope) {
+  .controller('editTallyCtrl', ['$rootScope', 'colorFactory', 'tallyFactory', function($rootScope, colorFactory, tallyFactory) {
     var vm = this;
 
     vm.show = false;
+    vm.colors = colorFactory.getColors();
 
-    $rootScope.$on('editTally', data => {
+    vm.openClose = function() {
       vm.show = !vm.show;
-      console.log(data);
+    };
+
+    vm.selectColor = function(color) {
+      vm.selectedColor = color;
+    };
+
+    vm.updateTally = function() {
+      var update = {
+        id: vm.tallyData.id,
+        task: vm.tallyName,
+        color: vm.selectedColor
+      };
+
+      tallyFactory.updateTally(update).then(data => {
+        console.log(data);
+        vm.openClose();
+      });
+    };
+
+    vm.deleteTally = function() {
+      tallyFactory.deleteTally(vm.tallyData.id).then(data => {
+        console.log(data);
+        vm.openClose();
+      });
+    };
+
+    $rootScope.$on('editTally', (e, data) => {
+      vm.tallyData = data.tallyData;
+      vm.selectedColor = data.tallyData.color;
+      vm.tallyName = data.tallyData.task;
+      vm.openClose();
     });
   }])
 

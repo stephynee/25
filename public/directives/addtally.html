@@ -1,16 +1,16 @@
-<div class="overlay-container" ng-if="ctrl.show">
-  <div class="overlay-content" ng-class="ctrl.selectedColor">
+<div class="overlay-container" ng-if="addCtrl.show">
+  <div class="overlay-content" ng-class="addCtrl.selectedColor">
     <div class="task-options">
       <span>Add task</span>
       <div>
-        <button class="cancel" ng-click="ctrl.openClose()">CANCEL</button>
-        <button class="save" ng-click="ctrl.addTally()">SAVE</button>
+        <button class="cancel" ng-click="addCtrl.openClose()">CANCEL</button>
+        <button class="save" ng-click="addCtrl.addTally()">SAVE</button>
       </div>
     </div>
-    <input type="text" class="task" ng-model="ctrl.tallyName">
+    <input type="text" class="task" ng-model="addCtrl.tallyName">
     <span>Color:</span>
     <div class="colors">
-      <div class="color" ng-repeat="color in ctrl.colors" ng-class="color" ng-click="ctrl.selectColor(color)"></div>
+      <div class="color" ng-repeat="color in addCtrl.colors" ng-class="color" ng-click="addCtrl.selectColor(color)"></div>
     </div>
   </div>
 </div>

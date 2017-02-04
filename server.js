@@ -60,4 +60,14 @@ app.post('/api/tallies', function(req, res) {
   res.json(newTask);
 });
 
+app.put('/api/tallies', function(req, res) {
+  console.log(req.body.data);
+  res.json('Success');
+});
+
+app.delete('/api/tallies', function(req, res) {
+  console.log(req.body.tallyId);
+  res.json('Success');
+});
+
 app.listen(port, ip, () => console.log('server running'));
