@@ -3,7 +3,7 @@
   <div class="info" ng-if="ctrl.showingInfo[data.id]">
     <i class="fa fa-clock-o" aria-hidden="true"></i>
     <i class="fa fa-bar-chart" aria-hidden="true"></i>
-    <i class="fa fa-pencil" aria-hidden="true"></i>
+    <i class="fa fa-pencil" aria-hidden="true" ng-click="ctrl.editTally(data.id)"></i>
   </div>
   <h2>{{data.task}}</h2>
   <div class="tally-num">

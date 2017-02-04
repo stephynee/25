@@ -14,7 +14,8 @@ html {
 .tally-num i,
 .overlay-content button,
 .color,
-.fa-info-circle {
+.fa-info-circle,
+.info i {
   cursor: pointer;
 }
 
