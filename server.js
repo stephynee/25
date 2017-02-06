@@ -61,12 +61,16 @@ app.post('/api/tallies', function(req, res) {
 });
 
 app.put('/api/tallies', function(req, res) {
-  console.log(req.body.data);
-  res.json('Success');
+  var i = tempData.findIndex(obj => obj.id === req.body.data.id);
+  tempData[i].task = req.body.data.task;
+  tempData[i].color = req.body.data.color;
+
+  res.json(tempData[i]);
 });
 
 app.delete('/api/tallies', function(req, res) {
-  console.log(req.body.tallyId);
+  var i = tempData.findIndex(obj => obj.id === req.body.tallyId);
+  tempData.splice(i, 1);
   res.json('Success');
 });
 

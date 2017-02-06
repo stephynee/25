@@ -106,14 +106,14 @@
       };
 
       tallyFactory.updateTally(update).then(data => {
-        console.log(data);
+        $rootScope.$broadcast('tallyUpdated', data.data);
         vm.openClose();
       });
     };
 
     vm.deleteTally = function() {
       tallyFactory.deleteTally(vm.tallyData.id).then(data => {
-        console.log(data);
+        $rootScope.$broadcast('tallyDeleted', vm.tallyData.id);
         vm.openClose();
       });
     };
@@ -136,6 +136,15 @@
     });
 
     $rootScope.$on('tallyAdded', (e, data) => vm.data.push(data));
+    $rootScope.$on('tallyUpdated', (e, data) => {
+      var i = vm.data.findIndex(obj => obj.id === data.id);
+      vm.data.splice(i, 1, data);
+    });
+
+    $rootScope.$on('tallyDeleted', (e, data) => {
+      var i = vm.data.findIndex(obj => obj.id === data);
+      vm.data.splice(i, 1);
+    });
   }])
 
   .controller('headerCtrl', ['$rootScope', function($rootScope) {
