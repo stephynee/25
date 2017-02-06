@@ -1,14 +1,29 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const app = express();
 const port = 8080;
 const ip = 'localhost';
 
+// mongoDB & mongoose
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/tallyDB');
+
+const User = require('./models/user.js');
+const Task = require('./models/task.js');
+
+// middleware & settings
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/public')));
+
+// temp stuff to remove when app is set up
+// User.create({username: 'stephanie'}, (err, newUser) => {
+//   if(err) {console.log(err)};
+//   console.log(newUser);
+// });
 
 var tempData = [
   {
@@ -43,20 +58,23 @@ var tempData = [
   }
 ];
 
+// routes need to be refactored
 app.get('/api/tallies', function(req, res) {
-  res.json(tempData);
+  User.findById('58989e697a2c1e2eb499cb25')
+  .populate('tasks')
+  .exec(function(err, user) {
+    if(err) return console.log(err);
+    res.json(user.tasks);
+  });
 });
 
 app.post('/api/tallies', function(req, res) {
   var newTask = {
     task: req.body.data.task,
-    tally: 0,
-    id: Math.random(),
+    tallies: [{}],
     color: req.body.data.color
   };
-
-  tempData.push(newTask);
-
+  // this needs to be tested to make sure that the tally object is being created using the default settings
   res.json(newTask);
 });
 

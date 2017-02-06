@@ -10,15 +10,19 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.16.0",
-    "express": "^4.14.1"
+    "express": "^4.14.1",
+    "mongoose": "^4.8.1"
   },
   "devDependencies": {
     "xo": "^0.17.0"
-    },
+  },
   "xo": {
-      "space": true,
-      "rules": {
-        "space-before-function-paren": ["error", "never"]
-      }
+    "space": true,
+    "rules": {
+      "space-before-function-paren": [
+        "error",
+        "never"
+      ]
+    }
   }
 }
