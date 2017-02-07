@@ -32,8 +32,9 @@ app.get('/api/tallies', function(req, res) {
   .exec(function(err, user) {
     if(err) return console.log(err);
 
-    var today = new Date().setHours(0, 0, 0, 0);
-    var taskRecentDate = user.tasks.length > 0 ? user.tasks[0].tallies[0].date.setHours(0, 0, 0, 0) : today;
+    const talliesLength = user.tasks.length;
+    const today = new Date().setHours(0, 0, 0, 0);
+    const taskRecentDate = talliesLength > 0 ? user.tasks[0].tallies[talliesLength - 1].date.setHours(0, 0, 0, 0) : today;
 
     if (today === taskRecentDate) {
       return res.json(user.tasks);
