@@ -6,6 +6,10 @@
       getTallies: function() {
         return $http.get('/api/tallies');
       },
+      getToday: function(tallies) {
+        var today = tallies[tallies.length - 1].tally < 10 ? '0' + tallies[tallies.length - 1].tally : tallies[tallies.length - 1].tally;
+        return today;
+      },
       addTally: function(data) {
         return $http.post('/api/tallies', {data: data});
       },

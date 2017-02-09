@@ -32,7 +32,7 @@ app.get('/api/tallies', function(req, res) {
   .exec(function(err, user) {
     if(err) return console.log(err);
 
-    const talliesLength = user.tasks.length;
+    const talliesLength = user.tasks[0].length;
     const today = new Date().setHours(0, 0, 0, 0);
     const taskRecentDate = talliesLength > 0 ? user.tasks[0].tallies[talliesLength - 1].date.setHours(0, 0, 0, 0) : today;
 
@@ -55,7 +55,7 @@ app.get('/api/tallies', function(req, res) {
 });
 
 app.post('/api/tallies', function(req, res) {
-  var newTask = {
+  var task = {
     task: req.body.data.task,
     tallies: [{}],
     color: req.body.data.color
@@ -64,25 +64,28 @@ app.post('/api/tallies', function(req, res) {
   User.findById('58989e697a2c1e2eb499cb25', function(err, user) {
     if(err) return console.log(err);
 
-    Task.create(newTask, function(err, newTask) {
+    Task.create(task, function(err, newTask) {
       if(err) return console.log(err);
       newTask.user = user;
       newTask.save();
       user.tasks.push(newTask);
       user.save();
       console.log(newTask.tallies);
+      res.json(newTask);
     });
   });
-  // this needs to be tested to make sure that the tally object is being created using the default settings
-  res.json(newTask);
 });
 
 app.put('/api/tallies', function(req, res) {
-  var i = tempData.findIndex(obj => obj.id === req.body.data.id);
-  tempData[i].task = req.body.data.task;
-  tempData[i].color = req.body.data.color;
+  console.log(req.body.data);
+  Task.findById(req.body.data.id, function(err, foundTask) {
+    if(err) return console.log(err);
 
-  res.json(tempData[i]);
+    foundTask.color = req.body.data.color;
+    foundTask.task = req.body.data.task;
+    foundTask.save();
+    res.json(foundTask);
+  });
 });
 
 app.delete('/api/tallies', function(req, res) {

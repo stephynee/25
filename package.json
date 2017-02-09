@@ -22,6 +22,12 @@
       "space-before-function-paren": [
         "error",
         "never"
+      ],
+      "no-trailing-spaces": [
+        2,
+        {
+          "skipBlankLines": true
+        }
       ]
     }
   }

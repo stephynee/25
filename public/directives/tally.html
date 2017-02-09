@@ -8,7 +8,7 @@
   <h2>{{data.task}}</h2>
   <div class="tally-num">
     <i class="fa fa-minus-circle" aria-hidden="true"></i>
-    <span>{{(data.tally < 10) ? '0' + data.tally : data.tally}}</span>
+    <span>{{singleCtrl.getToday(data.tallies)}}</span>
     <i class="fa fa-plus-circle" aria-hidden="true"></i>
   </div>
 </div>
