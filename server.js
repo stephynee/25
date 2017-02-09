@@ -25,6 +25,18 @@ app.use(express.static(path.join(__dirname, '/public')));
 //   console.log(newUser);
 // });
 
+User.findById('58989e697a2c1e2eb499cb25', function(err, user) {
+  // user.tasks = [];
+  // user.save();
+  // user.tasks.pull({_id: '589ca0e58e942635e0e3a34d'});
+  // user.save();
+  console.log(user);
+});
+
+Task.find({}, function(err, tasks) {
+  console.log(tasks);
+});
+
 // routes need to be refactored
 app.get('/api/tallies', function(req, res) {
   User.findById('58989e697a2c1e2eb499cb25')
@@ -32,9 +44,8 @@ app.get('/api/tallies', function(req, res) {
   .exec(function(err, user) {
     if(err) return console.log(err);
 
-    const talliesLength = user.tasks[0].length;
     const today = new Date().setHours(0, 0, 0, 0);
-    const taskRecentDate = talliesLength > 0 ? user.tasks[0].tallies[talliesLength - 1].date.setHours(0, 0, 0, 0) : today;
+    const taskRecentDate = user.tasks.length > 0 ? user.tasks[0].tallies[user.tasks[0].tallies.length - 1].date.setHours(0, 0, 0, 0) : today;
 
     if (today === taskRecentDate) {
       return res.json(user.tasks);
@@ -89,9 +100,16 @@ app.put('/api/tallies', function(req, res) {
 });
 
 app.delete('/api/tallies', function(req, res) {
-  var i = tempData.findIndex(obj => obj.id === req.body.tallyId);
-  tempData.splice(i, 1);
-  res.json('Success');
+  User.findById('58989e697a2c1e2eb499cb25', function(err, user) {
+    if(err) return console.log(err);
+
+    Task.findById(req.body.tallyId, function(err, task) {
+      user.tasks.pull({_id: task._id});
+      user.save();
+      task.remove();
+      res.json('Success');
+    });
+  });
 });
 
 app.listen(port, ip, () => console.log('server running'));

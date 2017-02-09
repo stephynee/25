@@ -115,8 +115,8 @@
     };
 
     vm.deleteTally = function() {
-      tallyFactory.deleteTally(vm.tallyData.id).then(() => {
-        $rootScope.$broadcast('tallyDeleted', vm.tallyData.id);
+      tallyFactory.deleteTally(vm.tallyData._id).then(() => {
+        $rootScope.$broadcast('tallyDeleted', vm.tallyData._id);
         vm.openClose();
       });
     };
@@ -145,7 +145,7 @@
     });
 
     $rootScope.$on('tallyDeleted', (e, data) => {
-      var i = vm.data.findIndex(obj => obj.id === data);
+      var i = vm.data.findIndex(obj => obj._id === data);
       vm.data.splice(i, 1);
     });
   }])
