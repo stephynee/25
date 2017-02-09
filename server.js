@@ -19,24 +19,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/public')));
 
-// temp stuff to remove when app is set up
-// User.create({username: 'stephanie'}, (err, newUser) => {
-//   if(err) {console.log(err)};
-//   console.log(newUser);
-// });
-
-User.findById('58989e697a2c1e2eb499cb25', function(err, user) {
-  // user.tasks = [];
-  // user.save();
-  // user.tasks.pull({_id: '589ca0e58e942635e0e3a34d'});
-  // user.save();
-  console.log(user);
-});
-
-Task.find({}, function(err, tasks) {
-  console.log(tasks);
-});
-
 // routes need to be refactored
 app.get('/api/tallies', function(req, res) {
   User.findById('58989e697a2c1e2eb499cb25')
@@ -81,14 +63,12 @@ app.post('/api/tallies', function(req, res) {
       newTask.save();
       user.tasks.push(newTask);
       user.save();
-      console.log(newTask.tallies);
       res.json(newTask);
     });
   });
 });
 
 app.put('/api/tallies', function(req, res) {
-  console.log(req.body.data);
   Task.findById(req.body.data.id, function(err, foundTask) {
     if(err) return console.log(err);
 
@@ -104,6 +84,8 @@ app.delete('/api/tallies', function(req, res) {
     if(err) return console.log(err);
 
     Task.findById(req.body.tallyId, function(err, task) {
+      if(err) return console.log(err);
+
       user.tasks.pull({_id: task._id});
       user.save();
       task.remove();
