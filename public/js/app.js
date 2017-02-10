@@ -51,15 +51,9 @@
       $rootScope.$broadcast('editTally', {tallyData: tally});
     };
 
-    vm.increment = function() {
-      console.log('increment');
-    };
+    vm.increment = tallyDataFactory.increment;
 
-    vm.decrement = function() {
-      console.log('decrement');
-    };
-
-    vm.getToday = tallyDataFactory.getToday;
+    vm.decrement = tallyDataFactory.decrement;
   }])
 
   .controller('addTallyCtrl', ['$rootScope', 'tallyFactory', 'colorFactory', 'tallyDataFactory', function($rootScope, tallyFactory, colorFactory, tallyDataFactory) {

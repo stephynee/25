@@ -1,14 +1,14 @@
 <div class="tally" ng-class="data.color">
-  <i class="fa fa-info-circle" aria-hidden="true" ng-click="singleCtrl.showInfo(data.id)"></i>
-  <div class="info" ng-if="singleCtrl.showingInfo[data.id]">
+  <i class="fa fa-info-circle" aria-hidden="true" ng-click="singleCtrl.showInfo(data._id)"></i>
+  <div class="info" ng-if="singleCtrl.showingInfo[data._id]">
     <i class="fa fa-clock-o" aria-hidden="true"></i>
     <i class="fa fa-bar-chart" aria-hidden="true"></i>
     <i class="fa fa-pencil" aria-hidden="true" ng-click="singleCtrl.editTally(data)"></i>
   </div>
   <h2>{{data.task}}</h2>
   <div class="tally-num">
-    <i class="fa fa-minus-circle" aria-hidden="true" ng-click="singleCtrl.decrement()"></i>
-    <span>{{singleCtrl.getToday(data.tallies)}}</span>
-    <i class="fa fa-plus-circle" aria-hidden="true" ng-click="singleCtrl.increment()"></i>
+    <i class="fa fa-minus-circle" aria-hidden="true" ng-click="singleCtrl.decrement(data._id)"></i>
+    <span>{{data.tallies[data.tallies.length - 1].tally < 10 ? '0' + data.tallies[data.tallies.length - 1].tally : data.tallies[data.tallies.length - 1].tally;}}</span>
+    <i class="fa fa-plus-circle" aria-hidden="true" ng-click="singleCtrl.increment(data._id)"></i>
   </div>
 </div>

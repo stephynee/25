@@ -94,4 +94,28 @@ app.delete('/api/tallies', function(req, res) {
   });
 });
 
+app.put('/api/tallies/increment', function(req, res) {
+  Task.findById(req.body.tallyId, function(err, task) {
+    if(err) return console.log(err);
+
+    var i = task.tallies.length - 1;
+    task.tallies[i].tally++;
+    task.save();
+
+    res.json('Success');
+  });
+});
+
+app.put('/api/tallies/decrement', function(req, res) {
+  Task.findById(req.body.tallyId, function(err, task) {
+    if(err) return console.log(err);
+
+    var i = task.tallies.length - 1;
+    task.tallies[i].tally--;
+    task.save();
+
+    res.json('Success');
+  });
+});
+
 app.listen(port, ip, () => console.log('server running'));

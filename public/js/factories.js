@@ -29,14 +29,10 @@
     return factory;
   }])
 
-  .factory('tallyDataFactory', [function() {
+  .factory('tallyDataFactory', ['$http', function($http) {
     var tallyData = [];
 
     var factory = {
-      getToday: function(tallies) {
-        var today = tallies[tallies.length - 1].tally < 10 ? '0' + tallies[tallies.length - 1].tally : tallies[tallies.length - 1].tally;
-        return today;
-      },
       getTallyData: function() {
         return tallyData;
       },
@@ -54,11 +50,18 @@
         var i = tallyData.findIndex(obj => obj._id === id);
         tallyData.splice(i, 1);
       },
-      increment: function() {
-
+      increment: function(id) {
+        var i = tallyData.findIndex(obj => obj._id === id);
+        tallyData[i].tallies[tallyData[i].tallies.length - 1].tally++;
+        $http.put('/api/tallies/increment', {tallyId: id});
       },
-      decrement: function() {
-
+      decrement: function(id) {
+        var i = tallyData.findIndex(obj => obj._id === id);
+        var tally = tallyData[i].tallies[tallyData[i].tallies.length - 1].tally;
+        if (tally > 0) {
+          tallyData[i].tallies[tallyData[i].tallies.length - 1].tally--;
+          $http.put('/api/tallies/decrement', {tallyId: id});
+        }
       }
     };
 
