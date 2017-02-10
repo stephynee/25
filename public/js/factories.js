@@ -6,10 +6,6 @@
       getTallies: function() {
         return $http.get('/api/tallies');
       },
-      getToday: function(tallies) {
-        var today = tallies[tallies.length - 1].tally < 10 ? '0' + tallies[tallies.length - 1].tally : tallies[tallies.length - 1].tally;
-        return today;
-      },
       addTally: function(data) {
         return $http.post('/api/tallies', {data: data});
       },
@@ -27,6 +23,42 @@
             'Content-Type': 'application/json;charset=utf-8'
           }
         });
+      }
+    };
+
+    return factory;
+  }])
+
+  .factory('tallyDataFactory', [function() {
+    var tallyData = [];
+
+    var factory = {
+      getToday: function(tallies) {
+        var today = tallies[tallies.length - 1].tally < 10 ? '0' + tallies[tallies.length - 1].tally : tallies[tallies.length - 1].tally;
+        return today;
+      },
+      getTallyData: function() {
+        return tallyData;
+      },
+      setTallyData: function(tallies) {
+        tallyData = tallies;
+      },
+      pushNew: function(tally) {
+        tallyData.push(tally);
+      },
+      editTally: function(tally) {
+        var i = tallyData.findIndex(obj => obj._id === tally._id);
+        tallyData.splice(i, 1, tally);
+      },
+      deleteTally: function(id) {
+        var i = tallyData.findIndex(obj => obj._id === id);
+        tallyData.splice(i, 1);
+      },
+      increment: function() {
+
+      },
+      decrement: function() {
+
       }
     };
 

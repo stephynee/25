@@ -38,7 +38,7 @@
 
   // directive controllers - move to another file at some point
 
-  .controller('singleTallyCtrl', ['$rootScope', 'tallyFactory', function($rootScope, tallyFactory) {
+  .controller('singleTallyCtrl', ['$rootScope', 'tallyDataFactory', function($rootScope, tallyDataFactory) {
     var vm = this;
 
     vm.showingInfo = {};
@@ -51,10 +51,18 @@
       $rootScope.$broadcast('editTally', {tallyData: tally});
     };
 
-    vm.getToday = tallyFactory.getToday;
+    vm.increment = function() {
+      console.log('increment');
+    };
+
+    vm.decrement = function() {
+      console.log('decrement');
+    };
+
+    vm.getToday = tallyDataFactory.getToday;
   }])
 
-  .controller('addTallyCtrl', ['$rootScope', 'tallyFactory', 'colorFactory', function($rootScope, tallyFactory, colorFactory) {
+  .controller('addTallyCtrl', ['$rootScope', 'tallyFactory', 'colorFactory', 'tallyDataFactory', function($rootScope, tallyFactory, colorFactory, tallyDataFactory) {
     var vm = this;
 
     vm.show = false;
@@ -73,7 +81,7 @@
       };
 
       tallyFactory.addTally(task).then(data => {
-        $rootScope.$broadcast('tallyAdded', data.data);
+        tallyDataFactory.pushNew(data.data);
         vm.openClose();
         vm.selectedColor = 'color-white';
         vm.tallyName = '';
@@ -87,7 +95,7 @@
     $rootScope.$on('addTally', vm.openClose);
   }])
 
-  .controller('editTallyCtrl', ['$rootScope', 'colorFactory', 'tallyFactory', function($rootScope, colorFactory, tallyFactory) {
+  .controller('editTallyCtrl', ['$rootScope', 'colorFactory', 'tallyFactory', 'tallyDataFactory', function($rootScope, colorFactory, tallyFactory, tallyDataFactory) {
     var vm = this;
 
     vm.show = false;
@@ -109,14 +117,14 @@
       };
 
       tallyFactory.updateTally(update).then(data => {
-        $rootScope.$broadcast('tallyUpdated', data.data);
+        tallyDataFactory.editTally(data.data);
         vm.openClose();
       });
     };
 
     vm.deleteTally = function() {
       tallyFactory.deleteTally(vm.tallyData._id).then(() => {
-        $rootScope.$broadcast('tallyDeleted', vm.tallyData._id);
+        tallyDataFactory.deleteTally(vm.tallyData._id);
         vm.openClose();
       });
     };
@@ -131,22 +139,12 @@
 
   // //////////////////////////////
 
-  .controller('tallyCtrl', ['tallyFactory', '$rootScope', function(tallyFactory, $rootScope) {
+  .controller('tallyCtrl', ['tallyFactory', 'tallyDataFactory', function(tallyFactory, tallyDataFactory) {
     var vm = this;
 
     tallyFactory.getTallies().then(data => {
-      vm.data = data.data;
-    });
-
-    $rootScope.$on('tallyAdded', (e, data) => vm.data.push(data));
-    $rootScope.$on('tallyUpdated', (e, data) => {
-      var i = vm.data.findIndex(obj => obj._id === data._id);
-      vm.data.splice(i, 1, data);
-    });
-
-    $rootScope.$on('tallyDeleted', (e, data) => {
-      var i = vm.data.findIndex(obj => obj._id === data);
-      vm.data.splice(i, 1);
+      tallyDataFactory.setTallyData(data.data);
+      vm.data = tallyDataFactory.getTallyData();
     });
   }])
 
