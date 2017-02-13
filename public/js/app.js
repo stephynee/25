@@ -36,6 +36,20 @@
     };
   }])
 
+  .directive('taskTimer', [function() {
+    return {
+      templateUrl: '/directives/tasktimer.html',
+      controller: 'taskTimerCtrl as timerCtrl'
+    };
+  }])
+
+  .directive('taskData', [function() {
+    return {
+      templateUrl: '/directives/taskdata.html',
+      controller: 'taskDataCtrl as dataCtrl'
+    };
+  }])
+
   // directive controllers - move to another file at some point
 
   .controller('singleTallyCtrl', ['$rootScope', 'tallyDataFactory', function($rootScope, tallyDataFactory) {
@@ -49,6 +63,10 @@
 
     vm.editTally = function(tally) {
       $rootScope.$broadcast('editTally', {tallyData: tally});
+    };
+
+    vm.showTimer = function(tally) {
+      $rootScope.$broadcast('showTimer', {tallyData: tally});
     };
 
     vm.increment = tallyDataFactory.increment;
@@ -128,6 +146,33 @@
       vm.selectedColor = data.tallyData.color;
       vm.tallyName = data.tallyData.task;
       vm.openClose();
+    });
+  }])
+
+  .controller('taskTimerCtrl', ['$rootScope', 'timerFactory', function($rootScope, timerFactory) {
+    var vm = this;
+
+    vm.show = false;
+    vm.timeLeft = '25:00';
+
+    vm.openClose = function() {
+      vm.show = !vm.show;
+      timerFactory.stopTimer();
+    };
+
+    vm.startTimer = function() {
+      timerFactory.startTimer(vm);
+    };
+
+    vm.pauseTimer = timerFactory.pauseTimer;
+
+    vm.stopTimer = function() {
+      timerFactory.stopTimer(vm);
+    };
+
+    $rootScope.$on('showTimer', (e, data) => {
+      vm.show = !vm.show;
+      vm.task = data.tallyData.task;
     });
   }])
 

@@ -15,7 +15,9 @@ html {
 .overlay-content button,
 .color,
 .fa-info-circle,
-.info i {
+.info i,
+.close,
+.timer-buttons i {
   cursor: pointer;
 }
 
