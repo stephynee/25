@@ -2,6 +2,9 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const moment = require('moment');
+
+const helpers = require('./helpers.js');
 
 const app = express();
 const port = 8080;
@@ -115,6 +118,33 @@ app.put('/api/tallies/decrement', function(req, res) {
     task.save();
 
     res.json('Success');
+  });
+});
+
+app.get('/api/tallies/:id/week', function(req, res) {
+  Task.findById(req.params.id, function(err, task) {
+    if (err) throw err;
+
+    var last = task.tallies.length - 1;
+    var weekStart = moment().startOf('week').valueOf();
+    var weekEnd = moment().endOf('week').valueOf();
+    var weekTallies = task.tallies.filter(tally => moment(tally.date).isBetween(weekStart, weekEnd));
+
+    var todayTally = task.tallies[last].tally;
+    var todayTime = helpers.totalTime(todayTally);
+    var weekTally = weekTallies.reduce((a, b) => a + b.tally, 0);
+    var weekTime = helpers.totalTime(weekTally);
+
+    var data = {
+      todayTally: todayTally,
+      todayTime: todayTime,
+      weekTally: weekTally,
+      weekTime: weekTime
+    };
+
+    // eventually need to pass full tally data with dates to work into graph
+
+    res.json(data);
   });
 });
 

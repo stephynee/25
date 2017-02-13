@@ -1,18 +1,18 @@
-<div class="overlay-container">
+<div class="overlay-container" ng-if="dataCtrl.show">
   <div class="overlay-content">
-    <i class="fa fa-window-close close" aria-hidden="true"></i>
+    <i class="fa fa-window-close close" aria-hidden="true" ng-click="dataCtrl.openClose()"></i>
     <div class="today">
-      <h1>Programming</h1>
-      <span><strong>Today:</strong> 08 - </span>
-      <span><strong>Total time today:</strong> 3 hr 23 min</span>
+      <h1>{{dataCtrl.task}}</h1>
+      <span><strong>Today:</strong> {{dataCtrl.todayTally}} - </span>
+      <span><strong>Total time today:</strong> {{dataCtrl.todayTime}}</span>
     </div>
     <div class="data-options">
       <button class="week">Week</button>
       <button class="month">Month</button>
       <button class="year">Year</button>
     </div>
-    <span><strong>Week total:</strong> 56</span>
-    <span><strong>Week total time:</strong> 15 hr 34 min</span>
+    <span><strong>{{dataCtrl.totalCat}} total:</strong> {{dataCtrl.weekTally}}</span>
+    <span><strong>{{dataCtrl.totalCat}} total time:</strong> {{dataCtrl.weekTime}}</span>
     <div class="graph">
 
     </div>

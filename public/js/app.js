@@ -69,6 +69,10 @@
       $rootScope.$broadcast('showTimer', {tallyData: tally});
     };
 
+    vm.showData = function(tally) {
+      $rootScope.$broadcast('showData', {task: tally.task, id: tally._id});
+    };
+
     vm.increment = tallyDataFactory.increment;
 
     vm.decrement = tallyDataFactory.decrement;
@@ -173,6 +177,28 @@
     $rootScope.$on('showTimer', (e, data) => {
       vm.show = !vm.show;
       vm.task = data.tallyData.task;
+    });
+  }])
+
+  .controller('taskDataCtrl', ['$rootScope', 'taskDataFactory', function($rootScope, taskDataFactory) {
+    var vm = this;
+
+    vm.show = false;
+
+    vm.openClose = function() {
+      vm.show = !vm.show;
+    };
+
+    $rootScope.$on('showData', (e, data) => {
+      vm.openClose();
+      vm.task = data.task;
+      taskDataFactory.getWeek(data.id).then(data => {
+        vm.totalCat = 'Week';
+        vm.todayTally = data.data.todayTally;
+        vm.todayTime = `${data.data.todayTime.hours} hr ${data.data.todayTime.minutes} min`;
+        vm.weekTally = data.data.weekTally;
+        vm.weekTime = `${data.data.weekTime.hours} hr ${data.data.weekTime.minutes} min`;
+      });
     });
   }])
 

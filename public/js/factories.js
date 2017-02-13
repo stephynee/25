@@ -80,7 +80,7 @@
     return factory;
   }])
 
-  .factory('timerFactory', ['$interval', function($interval) {
+  .factory('timerFactory', ['$interval', 'tallyDataFactory', function($interval, tallyDataFactory) {
     var timer;
     var time = 25 * 60;
     var pauseTime = null;
@@ -91,7 +91,7 @@
         var now = Date.now() / 1000;
         var then = now + time;
 
-        if (!timePushed){
+        if (!timePushed) {
           timePushed = true;
 
           timer = $interval(() => {
@@ -102,8 +102,9 @@
             vm.timeLeft = `${mins}:${secs}`;
             pauseTime = secondsLeft;
 
-            if (secondsLeft < 0) {
+            if (secondsLeft < 1) {
               $interval.cancel(timer);
+              tallyDataFactory.increment();
               factory.resetTime();
               timePushed = false;
             }
@@ -129,6 +130,17 @@
       resetTime: function() {
         time = 25 * 60;
         pauseTime = null;
+      }
+    };
+
+    return factory;
+  }])
+
+  .factory('taskDataFactory', ['$http', function($http) {
+    var factory = {
+      getWeek: function(id) {
+        var url = `/api/tallies/${id}/week`;
+        return $http.get(url);
       }
     };
 
