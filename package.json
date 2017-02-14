@@ -29,7 +29,8 @@
         {
           "skipBlankLines": true
         }
-      ]
+      ],
+      "no-prototype-builtins": 0
     }
   }
 }

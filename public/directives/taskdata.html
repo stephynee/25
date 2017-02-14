@@ -7,9 +7,9 @@
       <span><strong>Total time today:</strong> {{dataCtrl.todayTime}}</span>
     </div>
     <div class="data-options">
-      <button class="week" ng-click="dataCtrl.getRange('Week')">Week</button>
-      <button class="month" ng-click="dataCtrl.getRange('Month')">Month</button>
-      <button class="year" ng-click="dataCtrl.getRange('Year')">Year</button>
+      <button class="week" ng-class="{'selected': dataCtrl.selected.week}" ng-click="dataCtrl.getRange('Week')">Week</button>
+      <button class="month" ng-click="dataCtrl.getRange('Month')" ng-class="{'selected': dataCtrl.selected.month}">Month</button>
+      <button class="year" ng-click="dataCtrl.getRange('Year')" ng-class="{'selected': dataCtrl.selected.year}">Year</button>
     </div>
     <span><strong>{{dataCtrl.totalCat}} total:</strong> {{dataCtrl.rangeTally}}</span>
     <span><strong>{{dataCtrl.totalCat}} total time:</strong> {{dataCtrl.rangeTime}}</span>

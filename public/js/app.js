@@ -185,12 +185,25 @@
     var taskId;
 
     vm.show = false;
+    vm.selected = {
+      week: false,
+      month: false,
+      year: false
+    };
 
     vm.openClose = function() {
       vm.show = !vm.show;
     };
 
     vm.getRange = function(range) {
+      for (var key in vm.selected) {
+        if (vm.selected.hasOwnProperty(key)) {
+          vm.selected[key] = false;
+        }
+      }
+
+      vm.selected[range.toLowerCase()] = true;
+
       taskDataFactory.getRange(range, taskId).then(data => {
         if (range.toLowerCase() === 'week') {
           vm.todayTally = data.data.todayTally;

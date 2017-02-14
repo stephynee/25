@@ -147,6 +147,12 @@ html {
   top: 2px;
 }
 
+.selected {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 1px #000000 solid !important;
+}
+
 /*/////////////////////////////////
           timer styles
 /////////////////////////////////*/
