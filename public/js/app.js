@@ -182,6 +182,7 @@
 
   .controller('taskDataCtrl', ['$rootScope', 'taskDataFactory', function($rootScope, taskDataFactory) {
     var vm = this;
+    var taskId;
 
     vm.show = false;
 
@@ -189,16 +190,26 @@
       vm.show = !vm.show;
     };
 
+    vm.getRange = function(range) {
+      taskDataFactory.getRange(range, taskId).then(data => {
+        if (range.toLowerCase() === 'week') {
+          vm.todayTally = data.data.todayTally;
+          vm.todayTime = `${data.data.todayTime.hours} hr ${data.data.todayTime.minutes} min`;
+        }
+
+        vm.totalCat = range;
+        vm.rangeTally = data.data.tally;
+        vm.rangeTime = `${data.data.time.hours} hr ${data.data.time.minutes} min`;
+
+        console.log(data.data.fullData);
+      });
+    };
+
     $rootScope.$on('showData', (e, data) => {
       vm.openClose();
       vm.task = data.task;
-      taskDataFactory.getWeek(data.id).then(data => {
-        vm.totalCat = 'Week';
-        vm.todayTally = data.data.todayTally;
-        vm.todayTime = `${data.data.todayTime.hours} hr ${data.data.todayTime.minutes} min`;
-        vm.weekTally = data.data.weekTally;
-        vm.weekTime = `${data.data.weekTime.hours} hr ${data.data.weekTime.minutes} min`;
-      });
+      taskId = data.id;
+      vm.getRange('Week');
     });
   }])
 

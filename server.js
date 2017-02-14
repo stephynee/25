@@ -121,28 +121,19 @@ app.put('/api/tallies/decrement', function(req, res) {
   });
 });
 
-app.get('/api/tallies/:id/week', function(req, res) {
+app.get('/api/tallies/:range/:id', function(req, res) {
   Task.findById(req.params.id, function(err, task) {
     if (err) throw err;
 
+    var range = req.params.range.toLowerCase();
     var last = task.tallies.length - 1;
-    var weekStart = moment().startOf('week').valueOf();
-    var weekEnd = moment().endOf('week').valueOf();
-    var weekTallies = task.tallies.filter(tally => moment(tally.date).isBetween(weekStart, weekEnd));
-
     var todayTally = task.tallies[last].tally;
     var todayTime = helpers.totalTime(todayTally);
-    var weekTally = weekTallies.reduce((a, b) => a + b.tally, 0);
-    var weekTime = helpers.totalTime(weekTally);
 
-    var data = {
-      todayTally: todayTally,
-      todayTime: todayTime,
-      weekTally: weekTally,
-      weekTime: weekTime
-    };
+    var data = helpers.buildRangeData(moment, task, range);
 
-    // eventually need to pass full tally data with dates to work into graph
+    data.todayTally = todayTally;
+    data.todayTime = todayTime;
 
     res.json(data);
   });

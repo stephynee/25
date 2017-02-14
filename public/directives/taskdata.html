@@ -7,12 +7,12 @@
       <span><strong>Total time today:</strong> {{dataCtrl.todayTime}}</span>
     </div>
     <div class="data-options">
-      <button class="week">Week</button>
-      <button class="month">Month</button>
-      <button class="year">Year</button>
+      <button class="week" ng-click="dataCtrl.getRange('Week')">Week</button>
+      <button class="month" ng-click="dataCtrl.getRange('Month')">Month</button>
+      <button class="year" ng-click="dataCtrl.getRange('Year')">Year</button>
     </div>
-    <span><strong>{{dataCtrl.totalCat}} total:</strong> {{dataCtrl.weekTally}}</span>
-    <span><strong>{{dataCtrl.totalCat}} total time:</strong> {{dataCtrl.weekTime}}</span>
+    <span><strong>{{dataCtrl.totalCat}} total:</strong> {{dataCtrl.rangeTally}}</span>
+    <span><strong>{{dataCtrl.totalCat}} total time:</strong> {{dataCtrl.rangeTime}}</span>
     <div class="graph">
 
     </div>

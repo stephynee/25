@@ -138,8 +138,8 @@
 
   .factory('taskDataFactory', ['$http', function($http) {
     var factory = {
-      getWeek: function(id) {
-        var url = `/api/tallies/${id}/week`;
+      getRange: function(range, id) {
+        var url = `/api/tallies/${range}/${id}`;
         return $http.get(url);
       }
     };
