@@ -165,7 +165,7 @@
     };
 
     vm.startTimer = function() {
-      timerFactory.startTimer(vm);
+      timerFactory.startTimer(vm, vm.task._id);
     };
 
     vm.pauseTimer = timerFactory.pauseTimer;
@@ -176,7 +176,7 @@
 
     $rootScope.$on('showTimer', (e, data) => {
       vm.show = !vm.show;
-      vm.task = data.tallyData.task;
+      vm.task = data.tallyData;
     });
   }])
 
@@ -203,6 +203,7 @@
       }
 
       vm.selected[range.toLowerCase()] = true;
+      vm.totalCat = range;
 
       taskDataFactory.getRange(range, taskId).then(data => {
         if (range.toLowerCase() === 'week') {
@@ -210,7 +211,6 @@
           vm.todayTime = `${data.data.todayTime.hours} hr ${data.data.todayTime.minutes} min`;
         }
 
-        vm.totalCat = range;
         vm.rangeTally = data.data.tally;
         vm.rangeTime = `${data.data.time.hours} hr ${data.data.time.minutes} min`;
 

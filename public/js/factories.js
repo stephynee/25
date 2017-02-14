@@ -85,9 +85,9 @@
     var time = 25 * 60;
     var pauseTime = null;
     var timePushed = false;
-
+    
     var factory = {
-      startTimer: function(vm) {
+      startTimer: function(vm, id) {
         var now = Date.now() / 1000;
         var then = now + time;
 
@@ -104,7 +104,8 @@
 
             if (secondsLeft < 1) {
               $interval.cancel(timer);
-              tallyDataFactory.increment();
+              vm.timeLeft = '25:00';
+              tallyDataFactory.increment(id);
               factory.resetTime();
               timePushed = false;
             }

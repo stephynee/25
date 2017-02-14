@@ -1,7 +1,7 @@
 <div class="overlay-container" ng-if="timerCtrl.show">
     <div class="overlay-content">
       <i class="fa fa-window-close close" aria-hidden="true" ng-click="timerCtrl.openClose()"></i>
-      <h1>{{timerCtrl.task}}</h1>
+      <h1>{{timerCtrl.task.task}}</h1>
       <h2>{{timerCtrl.timeLeft}}</h2>
       <div class="timer-buttons">
         <i class="fa fa-play" aria-hidden="true" ng-click="timerCtrl.startTimer()"></i>

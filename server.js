@@ -122,7 +122,9 @@ app.put('/api/tallies/decrement', function(req, res) {
 });
 
 app.get('/api/tallies/:range/:id', function(req, res) {
-  Task.findById(req.params.id, function(err, task) {
+  var id = req.params.id;
+
+  Task.findById(id, function(err, task) {
     if (err) throw err;
 
     var range = req.params.range.toLowerCase();
