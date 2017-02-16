@@ -2,12 +2,14 @@ const moment = require('moment');
 
 module.exports = {
   totalTime: function(tally) {
+    // build time object from tally number
     var hours = Math.floor((tally * 25) / 60);
     var minutes = (tally * 25) % 60;
 
     return {hours: hours, minutes: minutes};
   },
   buildRangeData: function(task, range) {
+    // build range data for this week, month, or year
     var start = moment().startOf(range).valueOf();
     var end = moment().endOf(range).valueOf();
     var tallies = task.tallies.filter(tally => moment(tally.date).isBetween(start, end));
