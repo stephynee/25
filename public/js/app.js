@@ -214,12 +214,14 @@
 
         vm.rangeTally = data.data.tally;
         vm.rangeTime = `${data.data.time.hours} hr ${data.data.time.minutes} min`;
+        vm.bars = taskDataFactory.buildBars(data.data.graphData);
+        vm.rangeWidth = taskDataFactory.getRangeWidth();
+        console.log(vm.rangeWidth);
       });
-
-      console.log(vm.rangeDates);
     };
 
     $rootScope.$on('showData', (e, data) => {
+      // open the data overlay and display data for the week
       vm.openClose();
       vm.task = data.task;
       taskId = data.id;

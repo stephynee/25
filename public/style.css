@@ -212,47 +212,36 @@ html {
 .graph {
   width: 70%;
   padding-bottom: 70%;
-  background-color: red;
   margin-top: 20px;
   position: relative;
 }
 
 .bars {
-  background-color: blue;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  background-color: #000000;
   height: 90%;
   width: 100%;
   position: absolute;
+}
+
+.bar {
+  background-color: #ffffff;
+  /*transition: 1s;*/
 }
 
 .dates {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: grey;
+  color: #ffffff;
+  background-color: #000000;
   height: 10%;
   width: 100%;
   bottom: 0;
   position: absolute;
 }
-
-/*/////////////////////////////////
-          light theme
-/////////////////////////////////*/
-/*html {
-  background-color: #ffffff;
-  color: #ffffff;
-}
-
-.header {
-  color: #000000;
-}
-
-.fa-info-circle {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  color: rgba(255, 255, 255, 0.80);
-}*/
 
 /*/////////////////////////////////
           tally colors

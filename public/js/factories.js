@@ -140,9 +140,9 @@
   .factory('taskDataFactory', ['$http', function($http) {
     var dateRange = {
       week: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
-      month: [],
       year: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D']
     };
+    var rangeWidth = null;
 
     var factory = {
       getRange: function(range, id) {
@@ -155,6 +155,8 @@
           var last = new Date(now.getFullYear(), now.getMonth() + 1, 0);
           var daysInMonth = last.getDate();
 
+          dateRange.month = [];
+
           for (var i = 1; i <= daysInMonth; i += 6) {
             var date = `${now.getMonth() + 1}/${i}`;
             dateRange.month.push(date);
@@ -163,20 +165,27 @@
 
         return dateRange[range.toLowerCase()];
       },
-      buildBars: function(range, tallies) {
-        // var height = barsDiv.offsetHeight;
-        // var width = (barsDiv.offsetWidth / tallies.length) * 0.90;
-        // var max = Math.max.apply(Math, tallies);
-        // var unitSize = height / max;
-        //
-        // {
-        //   tally: 10,
-        //   height: '100px',
-        //   width: '25px'
-        // }
-        if(range === 'month') {
+      getRangeWidth: function() {
+        return rangeWidth;
+      },
+      buildBars: function(tallies) {
+        var barData = tallies;
+        var height = document.querySelector('.bars').offsetHeight;
+        var width = (document.querySelector('.bars').offsetHeight / tallies.length) * 0.90;
+        var max = Math.max.apply(Math, tallies.map(tally => tally.tally));
+        var unitSize = height / max;
 
+        // set date range width to match bar width
+        if (tallies.length < 13) {
+          rangeWidth = `${width}px`;
         }
+
+        barData.forEach(bar => {
+          bar.height = `${(unitSize * bar.tally) * 0.95}px`;
+          bar.width = `${width}px`;
+        });
+
+        return barData;
       }
     };
 
