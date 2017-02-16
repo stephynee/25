@@ -85,7 +85,7 @@
     var time = 25 * 60;
     var pauseTime = null;
     var timePushed = false;
-    
+
     var factory = {
       startTimer: function(vm, id) {
         var now = Date.now() / 1000;
@@ -138,13 +138,54 @@
   }])
 
   .factory('taskDataFactory', ['$http', function($http) {
+    var dateRange = {
+      week: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+      month: [],
+      year: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D']
+    };
+
     var factory = {
       getRange: function(range, id) {
         var url = `/api/tallies/${range}/${id}`;
         return $http.get(url);
+      },
+      getDateRange: function(range) {
+        if (range.toLowerCase() === 'month') {
+          var now = new Date();
+          var last = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+          var daysInMonth = last.getDate();
+
+          for (var i = 1; i <= daysInMonth; i += 6) {
+            var date = `${now.getMonth() + 1}/${i}`;
+            dateRange.month.push(date);
+          }
+        }
+
+        return dateRange[range.toLowerCase()];
+      },
+      buildBars: function(range, tallies) {
+        // var height = barsDiv.offsetHeight;
+        // var width = (barsDiv.offsetWidth / tallies.length) * 0.90;
+        // var max = Math.max.apply(Math, tallies);
+        // var unitSize = height / max;
+        //
+        // {
+        //   tally: 10,
+        //   height: '100px',
+        //   width: '25px'
+        // }
+        if(range === 'month') {
+
+        }
       }
     };
 
     return factory;
   }]);
 })();
+
+// factory for charts
+// var with the week
+// var with the data
+// get height function which matches the day with something in the data to get the heihgt
+// get tally funcion which matches the day with the tally to get the right data

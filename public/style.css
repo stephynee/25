@@ -214,6 +214,25 @@ html {
   padding-bottom: 70%;
   background-color: red;
   margin-top: 20px;
+  position: relative;
+}
+
+.bars {
+  background-color: blue;
+  height: 90%;
+  width: 100%;
+  position: absolute;
+}
+
+.dates {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: grey;
+  height: 10%;
+  width: 100%;
+  bottom: 0;
+  position: absolute;
 }
 
 /*/////////////////////////////////

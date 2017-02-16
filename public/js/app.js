@@ -204,6 +204,7 @@
 
       vm.selected[range.toLowerCase()] = true;
       vm.totalCat = range;
+      vm.rangeDates = taskDataFactory.getDateRange(range);
 
       taskDataFactory.getRange(range, taskId).then(data => {
         if (range.toLowerCase() === 'week') {
@@ -213,9 +214,9 @@
 
         vm.rangeTally = data.data.tally;
         vm.rangeTime = `${data.data.time.hours} hr ${data.data.time.minutes} min`;
-
-        console.log(data.data.fullData);
       });
+
+      console.log(vm.rangeDates);
     };
 
     $rootScope.$on('showData', (e, data) => {

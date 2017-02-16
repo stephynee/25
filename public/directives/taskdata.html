@@ -14,7 +14,11 @@
     <span><strong>{{dataCtrl.totalCat}} total:</strong> {{dataCtrl.rangeTally}}</span>
     <span><strong>{{dataCtrl.totalCat}} total time:</strong> {{dataCtrl.rangeTime}}</span>
     <div class="graph">
-
+      <div class="bars">
+      </div>
+      <div class="dates">
+        <span ng-repeat="date in dataCtrl.rangeDates track by $index">{{date}}</span>
+      </div>
     </div>
   </div>
 </div>

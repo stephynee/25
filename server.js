@@ -132,7 +132,7 @@ app.get('/api/tallies/:range/:id', function(req, res) {
     var todayTally = task.tallies[last].tally;
     var todayTime = helpers.totalTime(todayTally);
 
-    var data = helpers.buildRangeData(moment, task, range);
+    var data = helpers.buildRangeData(task, range);
 
     data.todayTally = todayTally;
     data.todayTime = todayTime;
