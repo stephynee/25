@@ -1,5 +1,5 @@
 (function() {
-  angular.module('tally25', ['ui.router'])
+  angular.module('tally25', ['ui.router', 'ngAnimate'])
 
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -216,7 +216,6 @@
         vm.rangeTime = `${data.data.time.hours} hr ${data.data.time.minutes} min`;
         vm.bars = taskDataFactory.buildBars(data.data.graphData);
         vm.rangeWidth = taskDataFactory.getRangeWidth();
-        console.log(vm.rangeWidth);
       });
     };
 

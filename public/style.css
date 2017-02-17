@@ -228,7 +228,30 @@ html {
 
 .bar {
   background-color: #ffffff;
-  /*transition: 1s;*/
+}
+
+/*.bar.ng-enter {
+    -webkit-transition: 1s;
+    transition: 1s;
+    opacity: 0;
+    height: 0;
+}
+.bar.ng-enter-active {
+    opacity: 1;
+    height: 0;
+    max-height: 500px;
+}*/
+
+.bar.ng-enter {
+   transition: 0.4s  linear all;
+}
+
+.bar.ng-enter, .bar.ng-leave.ng-leave-active {
+   max-height: 0;
+}
+
+.bar.ng-enter.ng-enter-active, .bar.ng-leave {
+   max-height: 350px;
 }
 
 .dates {
