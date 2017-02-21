@@ -230,17 +230,21 @@ html {
   background-color: #ffffff;
 }
 
-/*.bar.ng-enter {
-    -webkit-transition: 1s;
-    transition: 1s;
-    opacity: 0;
-    height: 0;
+.dates {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: #ffffff;
+  background-color: #000000;
+  height: 10%;
+  width: 100%;
+  bottom: 0;
+  position: absolute;
 }
-.bar.ng-enter-active {
-    opacity: 1;
-    height: 0;
-    max-height: 500px;
-}*/
+
+/*/////////////////////////////////
+        graph animation
+/////////////////////////////////*/
 
 .bar.ng-enter {
    transition: 0.4s  linear all;
@@ -254,16 +258,12 @@ html {
    max-height: 350px;
 }
 
-.dates {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  color: #ffffff;
-  background-color: #000000;
-  height: 10%;
-  width: 100%;
-  bottom: 0;
-  position: absolute;
+/*fix for ng-if animation on .info*/
+.info.ng-enter,
+.info.ng-leave,
+.info.ng-animate {
+  -webkit-transition: none !important;
+  transition: none !important;
 }
 
 /*/////////////////////////////////

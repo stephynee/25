@@ -10,6 +10,8 @@ const app = express();
 const port = 8080;
 const ip = 'localhost';
 
+const tempID = '58ac3f1d530f2368b113940c';
+
 // mongoDB & mongoose
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/tallyDB');
@@ -24,11 +26,11 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 // routes need to be refactored
 app.get('/api/tallies', function(req, res) {
-  User.findById('58989e697a2c1e2eb499cb25')
+  User.findById(tempID)
   .populate('tasks')
   .exec(function(err, user) {
     if(err) return console.log(err);
-
+    
     const today = new Date().setHours(0, 0, 0, 0);
     const taskRecentDate = user.tasks.length > 0 ? user.tasks[0].tallies[user.tasks[0].tallies.length - 1].date.setHours(0, 0, 0, 0) : today;
 
@@ -37,7 +39,7 @@ app.get('/api/tallies', function(req, res) {
     }
 
     // create new tallys for the day if none exist
-    Task.find({user: '58989e697a2c1e2eb499cb25'}, function(err, tasks) {
+    Task.find({user: tempID}, function(err, tasks) {
       if(err) return console.log(err);
 
       tasks.forEach(task => {
@@ -57,7 +59,7 @@ app.post('/api/tallies', function(req, res) {
     color: req.body.data.color
   };
 
-  User.findById('58989e697a2c1e2eb499cb25', function(err, user) {
+  User.findById(tempID, function(err, user) {
     if(err) return console.log(err);
 
     Task.create(task, function(err, newTask) {
@@ -83,7 +85,7 @@ app.put('/api/tallies', function(req, res) {
 });
 
 app.delete('/api/tallies', function(req, res) {
-  User.findById('58989e697a2c1e2eb499cb25', function(err, user) {
+  User.findById(tempID, function(err, user) {
     if(err) return console.log(err);
 
     Task.findById(req.body.tallyId, function(err, task) {

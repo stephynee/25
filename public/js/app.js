@@ -58,6 +58,8 @@
     vm.showingInfo = {};
 
     vm.showInfo = function(tallyId) {
+      console.log('clicked');
+      console.log(vm.showingInfo);
       vm.showingInfo[tallyId] = !vm.showingInfo[tallyId];
     };
 
