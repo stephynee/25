@@ -16,7 +16,7 @@
     <div class="graph">
       <div class="bars">
         <div class="bar" ng-repeat="bar in dataCtrl.bars" ng-style="{height: bar.height, width: bar.width}">
-          {{bar.tally}}
+          <span ng-if="bar.tally > 0">{{bar.tally}}</span>
         </div>
       </div>
       <div class="dates">

@@ -192,9 +192,3 @@
     return factory;
   }]);
 })();
-
-// factory for charts
-// var with the week
-// var with the data
-// get height function which matches the day with something in the data to get the heihgt
-// get tally funcion which matches the day with the tally to get the right data

@@ -224,11 +224,21 @@ html {
   height: 90%;
   width: 100%;
   position: absolute;
+  font-size: 0.6rem;
 }
 
 .bar {
   background-color: #ffffff;
+  position: relative;
 }
+/*
+.bar span {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  color: #ffffff;
+  text-align: center;
+}*/
 
 .dates {
   display: flex;

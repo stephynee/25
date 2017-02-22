@@ -30,7 +30,7 @@ app.get('/api/tallies', function(req, res) {
   .populate('tasks')
   .exec(function(err, user) {
     if(err) return console.log(err);
-    
+
     const today = new Date().setHours(0, 0, 0, 0);
     const taskRecentDate = user.tasks.length > 0 ? user.tasks[0].tallies[user.tasks[0].tallies.length - 1].date.setHours(0, 0, 0, 0) : today;
 
@@ -142,5 +142,16 @@ app.get('/api/tallies/:range/:id', function(req, res) {
     res.json(data);
   });
 });
+
+// Task.findById('58ac41b59028f06a9f935e21', function(err, task) {
+//   var obj = {
+//     tally: 10,
+//     date: new Date(2017, 1, 1)
+//   };
+//
+//   task.tallies.unshift(obj);
+//   task.save();
+//   console.log(task.tallies);
+// });
 
 app.listen(port, ip, () => console.log('server running'));
