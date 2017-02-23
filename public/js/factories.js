@@ -178,6 +178,9 @@
         // set date range width to match bar width
         if (tallies.length < 13) {
           rangeWidth = `${width}px`;
+        } else {
+          // fix
+          rangeWidth = `${width * 6}px`;
         }
 
         barData.forEach(bar => {

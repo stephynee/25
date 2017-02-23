@@ -13,7 +13,7 @@
     </div>
     <span><strong>{{dataCtrl.totalCat}} total:</strong> {{dataCtrl.rangeTally}}</span>
     <span><strong>{{dataCtrl.totalCat}} total time:</strong> {{dataCtrl.rangeTime}}</span>
-    <div class="graph">
+    <div class="graph" ng-class="{'monthly':dataCtrl.monthView}">
       <div class="bars">
         <div class="bar" ng-repeat="bar in dataCtrl.bars" ng-style="{height: bar.height, width: bar.width}">
           <span ng-if="bar.tally > 0">{{bar.tally}}</span>

@@ -207,6 +207,7 @@
       vm.selected[range.toLowerCase()] = true;
       vm.totalCat = range;
       vm.rangeDates = taskDataFactory.getDateRange(range);
+      vm.monthView = range === 'Month';
 
       taskDataFactory.getRange(range, taskId).then(data => {
         if (range.toLowerCase() === 'week') {

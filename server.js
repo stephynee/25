@@ -146,7 +146,7 @@ app.get('/api/tallies/:range/:id', function(req, res) {
 // Task.findById('58ac41b59028f06a9f935e21', function(err, task) {
 //   var obj = {
 //     tally: 10,
-//     date: new Date(2017, 1, 1)
+//     date: new Date(2017, 1, 7)
 //   };
 //
 //   task.tallies.unshift(obj);
