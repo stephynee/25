@@ -1,6 +1,22 @@
 (function() {
   angular.module('tally25')
 
+  .factory('authFactory', [function() {
+    var showingForm = 'login';
+
+    var factory = {
+      // control which form should be shown or hidden when clicking the login button
+      getForm: function() {
+        return showingForm;
+      },
+      setForm: function(form) {
+        showingForm = form;
+      }
+    };
+
+    return factory;
+  }])
+
   .factory('tallyFactory', ['$http', function($http) {
     var factory = {
       getTallies: function() {

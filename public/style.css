@@ -18,7 +18,8 @@ html {
 .info i,
 .close,
 .timer-buttons i,
-.login button {
+.login button,
+.switch-auth span {
   cursor: pointer;
 }
 

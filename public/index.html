@@ -14,17 +14,10 @@
     <task-timer></task-timer>
     <task-data></task-data>
 
-    <div class="login">
-      <button>Login</button>
-      <div class="auth-form">
-        <div class="arrow"></div>
-        <form>
-          <input type="text" placeholder="Username">
-          <input type="text" placeholder="Password">
-          <button type="submit">Go</button>
-        </form>
-        <span class="switch-auth"><span>Register</span> instead</span>
-      </div>
+    <div class="login" ng-controller="authCtrl as authCtrl">
+      <button ng-click="authCtrl.showForm()">Login</button>
+      <login></login>
+      <register></register>
     </div>
 
     <div class="header" ng-controller="headerCtrl as ctrl">

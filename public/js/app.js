@@ -12,6 +12,20 @@
       });
   }])
 
+  .directive('login', [function() {
+    return {
+      templateUrl: '/directives/login.html',
+      controller: 'loginCtrl as loginCtrl'
+    };
+  }])
+
+  .directive('register', [function() {
+    return {
+      templateUrl: '/directives/register.html',
+      controller: 'registerCtrl as registerCtrl'
+    };
+  }])
+
   .directive('tally', [function() {
     return {
       scope: {
@@ -50,7 +64,7 @@
     };
   }])
 
-  // directive controllers - move to another file at some point
+  // TODO: directive controllers - move to another file at some point
 
   .controller('singleTallyCtrl', ['$rootScope', 'tallyDataFactory', function($rootScope, tallyDataFactory) {
     var vm = this;
@@ -231,7 +245,47 @@
     });
   }])
 
-  // //////////////////////////////
+  // TODO: Auth controllers refactor into another file at some point
+
+  .controller('loginCtrl', ['$rootScope', 'authFactory', function($rootScope, authFactory) {
+    var vm = this;
+    
+    vm.showing = false;
+
+    vm.showRegister = function() {
+      vm.showing = false;
+      authFactory.setForm('register');
+      $rootScope.$broadcast('register');
+    };
+
+    $rootScope.$on('login', () => {
+      vm.showing = !vm.showing;
+    });
+  }])
+
+  .controller('registerCtrl', ['$rootScope', 'authFactory', function($rootScope, authFactory) {
+    var vm = this;
+
+    vm.showing = false;
+
+    vm.showLogin = function() {
+      vm.showing = false;
+      authFactory.setForm('login');
+      $rootScope.$broadcast('login');
+    };
+
+    $rootScope.$on('register', () => {
+      vm.showing = !vm.showing;
+    });
+  }])
+
+  .controller('authCtrl', ['$rootScope', 'authFactory', function($rootScope, authFactory) {
+    var vm = this;
+
+    vm.showForm = function() {
+      $rootScope.$broadcast(authFactory.getForm());
+    };
+  }])
 
   .controller('tallyCtrl', ['tallyFactory', 'tallyDataFactory', function(tallyFactory, tallyDataFactory) {
     var vm = this;
