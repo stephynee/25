@@ -17,7 +17,8 @@ html {
 .fa-info-circle,
 .info i,
 .close,
-.timer-buttons i {
+.timer-buttons i,
+.login button {
   cursor: pointer;
 }
 
@@ -32,6 +33,71 @@ html {
 .header h1,
 .header i {
   display: inline-block;
+}
+
+/*/////////////////////////////////
+          auth styles
+/////////////////////////////////*/
+
+.login {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  max-width: 500px;
+  margin: 10px auto 0 auto;
+  padding-right: 10%;
+}
+
+.login button {
+  outline: none;
+  border: 1px solid #ffffff;
+  background-color: transparent;
+  color: #ffffff;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.auth-form {
+  position: absolute;
+  background-color: #ffffff;
+  top: 40px;
+  right: -75px;
+  max-width: 250px;
+  padding: 10px;
+  border-radius: 3px;
+  color: #333;
+  text-align:center;
+}
+
+.auth-form input {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.auth-form button {
+  width: 100px;
+  margin-bottom: 10px;
+  border-color: #333;
+  color: #333;
+}
+
+.switch-auth {
+  font-size: 0.8rem;
+}
+
+.switch-auth span {
+  text-decoration: underline;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid #ffffff;
+  position: absolute;
+  top: -10px;
+  left: 75px;
 }
 
 /*/////////////////////////////////
@@ -205,6 +271,7 @@ html {
 /*/////////////////////////////////
            data styles
 /////////////////////////////////*/
+
 .data-options {
   margin: 20px 0;
 }
@@ -283,6 +350,7 @@ html {
 /*/////////////////////////////////
           tally colors
 /////////////////////////////////*/
+
 .color-white {background-color: #FAFAFA;}
 .color-red {background-color: #e63030;}
 .color-yellow {background-color: #e3bf30;}
@@ -298,6 +366,7 @@ html {
 /*/////////////////////////////////
            Media Queries
 /////////////////////////////////*/
+
 @media (min-width: 750px) {
   .info {
     left: 120px;
@@ -315,5 +384,9 @@ html {
 
   .container {
     justify-content: flex-start;
+  }
+
+  .login {
+    padding-right: 0;
   }
 }

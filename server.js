@@ -2,7 +2,9 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const moment = require('moment');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const session = require('express-session');
 
 const helpers = require('./helpers.js');
 
