@@ -7,26 +7,86 @@ const LocalStrategy = require('passport-local');
 const session = require('express-session');
 
 const helpers = require('./helpers.js');
+const User = require('./models/user.js');
+const Task = require('./models/task.js');
 
 const app = express();
 const port = 8080;
 const ip = 'localhost';
 
+// TODO: remove when code has authentication
 const tempID = '58ac3f1d530f2368b113940c';
+
+// auth config
+app.use(session({
+  secret: 'I am the secret to end all secrets',
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // mongoDB & mongoose
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/tallyDB');
-
-const User = require('./models/user.js');
-const Task = require('./models/task.js');
 
 // middleware & settings
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/public')));
 
-// routes need to be refactored
+// TODO: refactor routes into separate auth routes file
+app.post('/api/register', function(req, res) {
+  User.register(new User({username: req.body.username}), req.body.password, function(err, user) {
+    if (err) {
+      return res.status(500).json({error: err.message});
+    }
+
+    passport.authenticate('local')(req, res, function() {
+      return res.status(200).json({success: 'Successfully registered'});
+    });
+  });
+});
+
+app.post('/api/login', function(req, res, next) {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.status(401).json({error: info.message});
+    }
+
+    req.login(user, function(err) {
+      if (err) {
+        return res.status(500).json({error: err.message});
+      }
+      res.status(200).json({status: 'Successful login'});
+    });
+  })(req, res, next);
+});
+
+app.get('/api/logout', function(req, res) {
+  req.logout();
+  res.status(200).json({status: 'User logged out'});
+});
+
+app.get('/api/userstatus', function(req, res) {
+  // allow client to check if user is logged in and send appropriate response
+  if (!req.isAuthenticated()) {
+    console.log('user not logged in');
+    return res.status(200).json({status: false});
+  }
+  console.log('user is logged in');
+  res.status(200).json({status: true});
+});
+
+// TODO: routes need to be refactored
 app.get('/api/tallies', function(req, res) {
   User.findById(tempID)
   .populate('tasks')

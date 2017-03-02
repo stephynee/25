@@ -101,6 +101,17 @@ html {
   left: 75px;
 }
 
+.auth-form .error {
+  box-sizing: border-box;
+  background-color: #e63030;
+  max-width: 150px;
+  font-size: 0.8rem;
+  color: #ffffff;
+  border-radius: 3px;
+  margin: 0 auto;
+  padding: 3px;
+}
+
 /*/////////////////////////////////
           tally styles
 /////////////////////////////////*/

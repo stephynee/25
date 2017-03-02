@@ -15,7 +15,7 @@
     <task-data></task-data>
 
     <div class="login" ng-controller="authCtrl as authCtrl">
-      <button ng-click="authCtrl.showForm()">Login</button>
+      <button ng-click="authCtrl.loginLogout()">{{authCtrl.buttonText}}</button>
       <login></login>
       <register></register>
     </div>
