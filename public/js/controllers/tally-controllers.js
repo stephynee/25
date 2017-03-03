@@ -2,7 +2,7 @@
   angular.module('tally25')
 
   .controller('singleTallyCtrl', ['$rootScope', 'tallyDataFactory', function($rootScope, tallyDataFactory) {
-    var vm = this;
+    const vm = this;
 
     vm.showingInfo = {};
 
@@ -28,10 +28,10 @@
   }])
 
   .controller('addTallyCtrl', ['$rootScope', 'tallyFactory', 'colorFactory', 'tallyDataFactory', function($rootScope, tallyFactory, colorFactory, tallyDataFactory) {
-    var vm = this;
+    const vm = this;
 
     vm.show = false;
-    vm.tallyName = '';
+    // vm.tallyName = '';
     vm.colors = colorFactory.getColors();
     vm.selectedColor = 'color-white';
 
@@ -40,7 +40,7 @@
     };
 
     vm.addTally = function() {
-      let task = {
+      const task = {
         task: vm.tallyName,
         color: vm.selectedColor
       };
@@ -61,7 +61,7 @@
   }])
 
   .controller('editTallyCtrl', ['$rootScope', 'colorFactory', 'tallyFactory', 'tallyDataFactory', function($rootScope, colorFactory, tallyFactory, tallyDataFactory) {
-    var vm = this;
+    const vm = this;
 
     vm.show = false;
     vm.colors = colorFactory.getColors();
@@ -75,7 +75,7 @@
     };
 
     vm.updateTally = function() {
-      var update = {
+      const update = {
         id: vm.tallyData._id,
         task: vm.tallyName,
         color: vm.selectedColor
@@ -103,7 +103,7 @@
   }])
 
   .controller('taskTimerCtrl', ['$rootScope', 'timerFactory', function($rootScope, timerFactory) {
-    var vm = this;
+    const vm = this;
 
     vm.show = false;
     vm.timeLeft = '25:00';
@@ -130,8 +130,8 @@
   }])
 
   .controller('taskDataCtrl', ['$rootScope', 'taskDataFactory', function($rootScope, taskDataFactory) {
-    var vm = this;
-    var taskId;
+    const vm = this;
+    let taskId;
 
     vm.show = false;
     vm.selected = {

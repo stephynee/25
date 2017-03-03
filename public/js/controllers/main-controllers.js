@@ -2,7 +2,7 @@
   angular.module('tally25')
 
   .controller('headerCtrl', ['$rootScope', 'authFactory', function($rootScope, authFactory) {
-    var vm = this;
+    const vm = this;
 
     vm.addTally = function() {
       if (authFactory.isLoggedIn()) {

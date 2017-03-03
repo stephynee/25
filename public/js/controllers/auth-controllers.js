@@ -2,7 +2,7 @@
   angular.module('tally25')
 
   .controller('loginCtrl', ['$rootScope', 'authFactory', function($rootScope, authFactory) {
-    var vm = this;
+    const vm = this;
 
     vm.showing = false;
 
@@ -16,9 +16,9 @@
           $rootScope.$broadcast('loggedIn');
         })
         .catch(err => {
+          vm.form = {};
           vm.error = true;
           vm.errorMessage = err.message || 'Something went wrong';
-          vm.form = {};
         });
     };
 
@@ -34,7 +34,7 @@
   }])
 
   .controller('registerCtrl', ['$rootScope', 'authFactory', function($rootScope, authFactory) {
-    var vm = this;
+    const vm = this;
 
     vm.showing = false;
 
@@ -62,14 +62,14 @@
 
       authFactory.register(vm.form.username, vm.form.password)
         .then(() => {
-          vm.showing = false;
           vm.form = {};
+          vm.showing = false;
           $rootScope.$broadcast('loggedIn');
         })
         .catch(err => {
+          vm.form = {};
           vm.error = true;
           vm.errorMessage = err.message || 'Something went wrong';
-          vm.form = {};
         });
     };
 
@@ -79,8 +79,8 @@
   }])
 
   .controller('authCtrl', ['$rootScope', 'authFactory', function($rootScope, authFactory) {
-    var vm = this;
-    var loggedIn;
+    const vm = this;
+    let loggedIn;
 
     function changeStatus() {
       loggedIn = authFactory.isLoggedIn();
