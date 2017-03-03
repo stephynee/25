@@ -20,11 +20,17 @@
         vm.data = tallyDataFactory.getTallyData();
         vm.showMessage = false;
 
-        if (vm.data.length < 1) {
-          vm.showMessage = true;
-          vm.message = 'Click the plus to add a task.';
-        }
+        showMessage();
       });
+    }
+
+    function showMessage() {
+      if (vm.data.length < 1) {
+        vm.showMessage = true;
+        vm.message = 'Click the plus to add a task.';
+      } else {
+        vm.showMessage = false;
+      }
     }
 
     authFactory.getUserStatus().then(() => {
@@ -42,5 +48,7 @@
       vm.message = 'Please login or register to track tasks.';
       vm.showMessage = true;
     });
+    $rootScope.$on('taskAdded', showMessage);
+    $rootScope.$on('taskDeleted', showMessage);
   }]);
 })();

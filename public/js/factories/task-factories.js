@@ -29,7 +29,7 @@
     return factory;
   }])
 
-  .factory('tallyDataFactory', ['$http', function($http) {
+  .factory('tallyDataFactory', ['$http', '$rootScope', function($http, $rootScope) {
     let tallyData = [];
 
     const factory = {
@@ -41,6 +41,10 @@
       },
       pushNew: function(tally) {
         tallyData.push(tally);
+
+        if (tallyData.length === 1) {
+          $rootScope.$broadcast('taskAdded');
+        }
       },
       editTally: function(tally) {
         const i = tallyData.findIndex(obj => obj._id === tally._id);
@@ -51,6 +55,10 @@
         const i = tallyData.findIndex(obj => obj._id === id);
 
         tallyData.splice(i, 1);
+
+        if (tallyData.length === 0) {
+          $rootScope.$broadcast('taskDeleted');
+        }
       },
       increment: function(id) {
         const i = tallyData.findIndex(obj => obj._id === id);

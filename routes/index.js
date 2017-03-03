@@ -8,7 +8,8 @@ const helpers = require('../helpers.js');
 const tempID = '58ac3f1d530f2368b113940c';
 
 router.get('/tallies', function(req, res) {
-  User.findById(tempID)
+  console.log(req.user);
+  User.findById(req.user._id)
   .populate('tasks')
   .exec(function(err, user) {
     if(err) return console.log(err);
@@ -21,7 +22,7 @@ router.get('/tallies', function(req, res) {
     }
 
     // create new tallys for the day if none exist
-    Task.find({user: tempID}, function(err, tasks) {
+    Task.find({user: req.user._id}, function(err, tasks) {
       if(err) return console.log(err);
 
       tasks.forEach(task => {
@@ -41,7 +42,7 @@ router.post('/tallies', function(req, res) {
     color: req.body.data.color
   };
 
-  User.findById(tempID, function(err, user) {
+  User.findById(req.user._id, function(err, user) {
     if(err) return console.log(err);
 
     Task.create(task, function(err, newTask) {
@@ -68,7 +69,7 @@ router.put('/tallies', function(req, res) {
 });
 
 router.delete('/tallies', function(req, res) {
-  User.findById(tempID, function(err, user) {
+  User.findById(req.user._id, function(err, user) {
     if(err) return console.log(err);
 
     Task.findById(req.body.tallyId, function(err, task) {
