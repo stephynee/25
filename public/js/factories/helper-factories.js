@@ -2,9 +2,9 @@
   angular.module('tally25')
 
   .factory('colorFactory', [function() {
-    var colors = ['color-red', 'color-yellow', 'color-green', 'color-seafoam', 'color-lightblue', 'color-blue', 'color-purple', 'color-pink', 'color-darkpink'];
+    const colors = ['color-red', 'color-yellow', 'color-green', 'color-seafoam', 'color-lightblue', 'color-blue', 'color-purple', 'color-pink', 'color-darkpink'];
 
-    var factory = {
+    const factory = {
       getColors: function() {
         return colors;
       }
@@ -14,23 +14,23 @@
   }])
 
   .factory('timerFactory', ['$interval', 'tallyDataFactory', function($interval, tallyDataFactory) {
-    var timer;
-    var time = 25 * 60;
-    var pauseTime = null;
-    var timePushed = false;
+    let timer;
+    let time = 25 * 60;
+    let pauseTime = null;
+    let timePushed = false;
 
-    var factory = {
+    const factory = {
       startTimer: function(vm, id) {
-        var now = Date.now() / 1000;
-        var then = now + time;
+        let now = Date.now() / 1000;
+        let then = now + time;
 
         if (!timePushed) {
           timePushed = true;
 
           timer = $interval(() => {
-            var secondsLeft = Math.round(then - (Date.now() / 1000));
-            var mins = Math.floor(secondsLeft / 60);
-            var secs = secondsLeft % 60 >= 10 ? secondsLeft % 60 : '0' + (secondsLeft % 60);
+            let secondsLeft = Math.round(then - (Date.now() / 1000));
+            let mins = Math.floor(secondsLeft / 60);
+            let secs = secondsLeft % 60 >= 10 ? secondsLeft % 60 : '0' + (secondsLeft % 60);
 
             vm.timeLeft = `${mins}:${secs}`;
             pauseTime = secondsLeft;
