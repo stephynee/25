@@ -1,0 +1,11 @@
+<div class="auth-form" ng-if="registerCtrl.showing">
+  <div class="arrow"></div>
+  <form ng-submit="registerCtrl.register()">
+    <input type="text" placeholder="Username" ng-model="registerCtrl.form.username">
+    <input type="password" placeholder="Password" ng-model="registerCtrl.form.password">
+    <input type="password" placeholder="Password" ng-model="registerCtrl.form.passwordCheck">
+    <button type="submit">Go</button>
+    <div class="error" ng-show="registerCtrl.error">{{registerCtrl.errorMessage}}</div>
+  </form>
+  <span class="switch-auth"><span ng-click="registerCtrl.showLogin()">Login</span> instead</span>
+</div>
