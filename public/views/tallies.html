@@ -1,3 +1,6 @@
 <div class="container">
+  <div class="nodata-message" ng-show="tallyCtrl.showMessage">
+    <h2>{{tallyCtrl.message}}</h2>
+  </div>
   <tally ng-repeat="tally in tallyCtrl.data | orderBy: 'task'" data="tally"></tally>
 </div>

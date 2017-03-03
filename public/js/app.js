@@ -340,6 +340,7 @@
         authFactory.logout().then(() => {
           vm.buttonText = 'Login';
           loggedIn = false;
+          $rootScope.$broadcast('loggedOut');
         });
       } else {
         $rootScope.$broadcast(authFactory.getForm());
@@ -356,16 +357,30 @@
       tallyFactory.getTallies().then(data => {
         tallyDataFactory.setTallyData(data.data);
         vm.data = tallyDataFactory.getTallyData();
+        vm.showMessage = false;
+
+        if (vm.data.length < 1) {
+          vm.showMessage = true;
+          vm.message = 'Click the plus to add a task.';
+        }
       });
     }
 
     authFactory.getUserStatus().then(() => {
       if (authFactory.isLoggedIn()) {
         populateData();
+      } else {
+        vm.message = 'Please login or register to track tasks.';
+        vm.showMessage = true;
       }
     });
 
     $rootScope.$on('loggedIn', populateData);
+    $rootScope.$on('loggedOut', () => {
+      vm.data = [];
+      vm.message = 'Please login or register to track tasks.';
+      vm.showMessage = true;
+    });
   }])
 
   .controller('headerCtrl', ['$rootScope', 'authFactory', function($rootScope, authFactory) {

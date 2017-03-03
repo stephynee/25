@@ -125,6 +125,11 @@ html {
   padding: 0 20px;
 }
 
+.nodata-message {
+  color: #ffffff;
+  margin: 0 auto;
+}
+
 .tally {
   display: flex;
   flex-direction: column;
