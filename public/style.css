@@ -341,7 +341,7 @@ html {
 }
 
 /*/////////////////////////////////
-        graph animation
+          animations
 /////////////////////////////////*/
 
 .bar.ng-enter {
@@ -354,6 +354,21 @@ html {
 
 .bar.ng-enter.ng-enter-active, .bar.ng-leave {
    max-height: 350px;
+}
+
+.auth-form.ng-enter, .auth-form.ng-leave {
+  transition: 1s all;
+  overflow: hidden;
+}
+
+.auth-form.ng-enter, .auth-form.ng-leave.ng-leave-active {
+   max-height: 0;
+   opacity: 0;
+}
+
+.auth-form.ng-enter.ng-enter-active, .auth-form.ng-leave {
+   max-height: 600px;
+   opacity: 1;
 }
 
 /*fix for ng-if animation on .info*/
