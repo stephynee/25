@@ -4,7 +4,7 @@
     <input type="text" placeholder="Username" ng-model="registerCtrl.form.username">
     <input type="password" placeholder="Password" ng-model="registerCtrl.form.password">
     <input type="password" placeholder="Password" ng-model="registerCtrl.form.passwordCheck">
-    <button type="submit">Go</button>
+    <button type="submit" ng-disabled="registerCtrl.disabled">Go</button>
     <div class="error" ng-show="registerCtrl.error">{{registerCtrl.errorMessage}}</div>
   </form>
   <span class="switch-auth"><span ng-click="registerCtrl.showLogin()">Login</span> instead</span>

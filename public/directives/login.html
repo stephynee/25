@@ -3,7 +3,7 @@
   <form ng-submit="loginCtrl.login()">
     <input type="text" placeholder="Username" ng-model="loginCtrl.form.username">
     <input type="password" placeholder="Password" ng-model="loginCtrl.form.password">
-    <button type="submit">Go</button>
+    <button type="submit" ng-disabled="loginCtrl.disabled">Go</button>
     <div class="error" ng-show="loginCtrl.error">{{loginCtrl.errorMessage}}</div>
   </form>
   <span class="switch-auth"><span ng-click="loginCtrl.showRegister()">Register</span> instead</span>

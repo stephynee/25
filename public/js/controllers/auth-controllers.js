@@ -8,16 +8,19 @@
 
     vm.login = function() {
       vm.error = false;
+      vm.disabled = true;
 
       authFactory.login(vm.form.username, vm.form.password)
         .then(() => {
           vm.form = {};
           vm.showing = false;
+          vm.disabled = false;
           $rootScope.$broadcast('loggedIn');
         })
         .catch(err => {
           vm.form = {};
           vm.error = true;
+          vm.disabled = false;
           vm.errorMessage = err.message || 'Something went wrong';
         });
     };
@@ -46,31 +49,32 @@
 
     vm.register = function() {
       vm.error = false;
-      // TODO: add in the disabled setting so that the user cannot submit the form over and over while the login promise is going through
-      // add this in after I've got a functioning promise
+      vm.disabled = true;
 
       // validate form
       if (vm.form.password !== vm.form.passwordCheck) {
         vm.error = true;
+        vm.disabled = false;
         vm.errorMessage = 'Passwords do not match';
-      }
-
-      if (!vm.form.username) {
+      } else if (!vm.form.username) {
         vm.error = true;
+        vm.disabled = false;
         vm.errorMessage = 'Username cannot be empty';
+      } else {
+        authFactory.register(vm.form.username, vm.form.password)
+          .then(() => {
+            vm.form = {};
+            vm.showing = false;
+            vm.disabled = false;
+            $rootScope.$broadcast('loggedIn');
+          })
+          .catch(err => {
+            vm.form = {};
+            vm.error = true;
+            vm.disabled = false;
+            vm.errorMessage = err.message || 'Something went wrong';
+          });
       }
-
-      authFactory.register(vm.form.username, vm.form.password)
-        .then(() => {
-          vm.form = {};
-          vm.showing = false;
-          $rootScope.$broadcast('loggedIn');
-        })
-        .catch(err => {
-          vm.form = {};
-          vm.error = true;
-          vm.errorMessage = err.message || 'Something went wrong';
-        });
     };
 
     $rootScope.$on('register', () => {
