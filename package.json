@@ -37,7 +37,12 @@
         }
       ],
       "no-prototype-builtins": 0,
-      "keyword-spacing": ["error", { "after": false }]
+      "keyword-spacing": ["error", {
+        "overrides": {
+          "if": { "after": false },
+          "else": { "after": false }
+        }
+      }]
     }
   }
 }

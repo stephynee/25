@@ -35,7 +35,7 @@ module.exports = {
     };
     const dateFormat = range === 'week' ? 'dddd' : 'D';
 
-    if (range === 'month') {
+    if(range === 'month') {
       // build monthly days array according to this month
       const now = moment();
       const daysInMonth = now.endOf('month').format('D');
@@ -45,7 +45,7 @@ module.exports = {
       }
     }
 
-    if (range === 'year') {
+    if(range === 'year') {
       ranges.year.forEach(month => {
         // get the tally total for each month and push data into array by month
         const thisMonth = tallies
@@ -53,14 +53,14 @@ module.exports = {
           .reduce((a, b) => a + b.tally, 0);
         data.push({tally: thisMonth, date: month});
       });
-    } else {
+    } else{
       ranges[range].forEach(date => {
         // get the data for each day and push data for the month or for the week into array
         const index = tallies.findIndex(tally => moment(tally.date).format(dateFormat) === date);
 
-        if (index > -1) {
+        if(index > -1) {
           data.push(tallies[index]);
-        } else {
+        } else{
           data.push({tally: 0, date: null});
         }
       });
