@@ -5,15 +5,14 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const session = require('express-session');
+const helpers = require('./helpers');
 
-const User = require('./models/user.js');
+const User = require('./models/user');
 
-const auth = require('./routes/auth.js');
-const index = require('./routes/index.js');
+const auth = require('./routes/auth');
+const index = require('./routes/index');
 
 const app = express();
-const port = 8080;
-const ip = 'localhost';
 
 // auth config
 app.use(session({
@@ -30,7 +29,9 @@ passport.deserializeUser(User.deserializeUser());
 
 // mongoDB & mongoose
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/tallyDB');
+if (process.env.NODE_ENV !== 'test') {
+  mongoose.connect('mongodb://localhost/tallyDB');
+}
 
 // middleware & settings
 app.use(bodyParser.urlencoded({extended: true}));
@@ -41,4 +42,6 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use('/api', auth);
 app.use('/api', index);
 
-app.listen(port, ip, () => console.log('server running'));
+app.use(helpers.sendError);
+
+module.exports = app;

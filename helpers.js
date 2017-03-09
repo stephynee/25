@@ -67,5 +67,8 @@ module.exports = {
     }
 
     return data;
+  },
+  sendError: function(err, req, res, next) {
+    res.status(500).send({err: err.message});
   }
 };

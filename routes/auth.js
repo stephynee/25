@@ -4,31 +4,31 @@ const router = express.Router();
 const passport = require('passport');
 const User = require('../models/user.js');
 
-router.post('/register', function(req, res) {
-  User.register(new User({username: req.body.username}), req.body.password, function(err, user) {
-    if (err) {
-      return res.status(500).json({error: err.message});
+router.post('/register', (req, res, next) => {
+  User.register(new User({username: req.body.username}), req.body.password, (err, user) => {
+    if(err) {
+      next(err);
     }
 
-    passport.authenticate('local')(req, res, function() {
-      return res.status(200).json({success: 'Successfully registered'});
+    passport.authenticate('local')(req, res, () => {
+      return res.status(200).json({success: 'Successfully registered', user: user});
     });
   });
 });
 
-router.post('/login', function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
-    if (err) {
-      return next(err);
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if(err) {
+      next(err);
     }
 
-    if (!user) {
+    if(!user) {
       return res.status(401).json({error: info.message});
     }
 
-    req.login(user, function(err) {
-      if (err) {
-        return res.status(500).json({error: err.message});
+    req.login(user, err => {
+      if(err) {
+        next(err);
       }
       res.status(200).json({status: 'Successful login'});
     });
@@ -42,7 +42,7 @@ router.get('/logout', function(req, res) {
 
 router.get('/userstatus', function(req, res) {
   // allow client to check if user is logged in and send appropriate response
-  if (!req.isAuthenticated()) {
+  if(!req.isAuthenticated()) {
     return res.status(200).json({status: false});
   }
 
