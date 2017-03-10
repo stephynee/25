@@ -7,32 +7,24 @@ const helpers = require('../helpers.js');
 
 const tempID = '58ac3f1d530f2368b113940c';
 
-router.get('/tallies', function(req, res) {
-  console.log(req.user);
-  User.findById(req.user._id)
-  .populate('tasks')
-  .exec(function(err, user) {
-    if(err) return console.log(err);
+router.get('/tallies', function(req, res, next) {
+  const userId = req.user._id;
 
-    const today = new Date().setHours(0, 0, 0, 0);
-    const taskRecentDate = user.tasks.length > 0 ? user.tasks[0].tallies[user.tasks[0].tallies.length - 1].date.setHours(0, 0, 0, 0) : today;
+  User.findById(userId)
+    .populate('tasks')
+    .then(user => {
+      const today = new Date().setHours(0, 0, 0, 0);
+      const taskRecentDate = user.tasks.length > 0 ? user.tasks[0].tallies[user.tasks[0].tallies.length - 1].date.setHours(0, 0, 0, 0) : today;
 
-    if (today === taskRecentDate) {
-      return res.json(user.tasks);
-    }
+      if(today === taskRecentDate) {
+        return res.json(user.tasks);
+      }
 
-    // create new tallys for the day if none exist
-    Task.find({user: req.user._id}, function(err, tasks) {
-      if(err) return console.log(err);
-
-      tasks.forEach(task => {
-        task.tallies.push({});
-        task.save();
-      });
-
-      res.json(tasks);
-    });
-  });
+      return Task.update({user: userId}, {$push: {tallies: {}}}, {multi: true});
+    })
+    .then(() => Task.find({user: userId}))
+    .then(tasks => res.json(tasks))
+    .catch(next);
 });
 
 router.post('/tallies', function(req, res) {
