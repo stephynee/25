@@ -69,16 +69,35 @@ describe('Tasks GET route', () => {
     agent
       .get('/api/tallies')
       .end((err, res) => {
+        if(err) {
+          return done(err);
+        }
+
         assert(res.body.length === 0);
         done();
       });
   });
 
-  // it('returns tasks if tallies for the day already exist', done => {
-  //
-  // });
-  //
-  // it('returns an error if something goes wrong', done => {
-  //
-  // });
+  it('returns tasks if tallies for the day already exist', done => {
+    const task1 = new Task({task: 'test', color: 'test', tallies: [{}], user: testUser});
+    const task2 = new Task({task: 'test2', color: 'test2', tallies: [{}], user: testUser});
+
+    Promise.all([task1.save(), task2.save()])
+      .then(tasks => {
+        return User.findByIdAndUpdate(testUser._id, {$push: {tasks: {$each: tasks}}});
+      })
+      .then(() => {
+        agent
+          .get('/api/tallies')
+          .end((err, res) => {
+            if(err) {
+              return done(err);
+            }
+
+            assert(res.body[0].tallies.length === 1);
+            assert(res.body[1].tallies.length === 1);
+            done();
+          });
+      });
+  });
 });

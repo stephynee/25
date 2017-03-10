@@ -11,4 +11,12 @@ const taskSchema = new mongoose.Schema({
   user: {type: mongoose.Schema.Types.ObjectId, ref: 'Task'}
 });
 
+// push the new task into user whenever a new task is saved
+taskSchema.post('save', function(next) {
+  const user = mongoose.model('User');
+
+  user.update({_id: this.user}, {$push: {tasks: this}})
+    .then(next);
+});
+
 module.exports = mongoose.model('Task', taskSchema);

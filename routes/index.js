@@ -16,10 +16,12 @@ router.get('/tallies', function(req, res, next) {
       const today = new Date().setHours(0, 0, 0, 0);
       const taskRecentDate = user.tasks.length > 0 ? user.tasks[0].tallies[user.tasks[0].tallies.length - 1].date.setHours(0, 0, 0, 0) : today;
 
+      // if tallies for the day exist, or if user has no tasks send current tasks array
       if(today === taskRecentDate) {
         return res.json(user.tasks);
       }
 
+      // add tally for current day and then send tasks
       return Task.update({user: userId}, {$push: {tallies: {}}}, {multi: true});
     })
     .then(() => Task.find({user: userId}))
@@ -27,26 +29,23 @@ router.get('/tallies', function(req, res, next) {
     .catch(next);
 });
 
-router.post('/tallies', function(req, res) {
+router.post('/tallies', function(req, res, next) {
+  const userId = req.user._id;
   const task = {
     task: req.body.data.task,
     tallies: [{}],
     color: req.body.data.color
   };
+  const newTask = new Task(task);
 
-  User.findById(req.user._id, function(err, user) {
-    if(err) return console.log(err);
-
-    Task.create(task, function(err, newTask) {
-      if(err) return console.log(err);
-
+  // create new task and save to user
+  User.findById(userId)
+    .then(user => {
       newTask.user = user;
-      newTask.save();
-      user.tasks.push(newTask);
-      user.save();
-      res.json(newTask);
-    });
-  });
+      return newTask.save();
+    })
+    .then(savedTask => res.json(savedTask))
+    .catch(next);
 });
 
 router.put('/tallies', function(req, res) {
