@@ -29,7 +29,7 @@ passport.deserializeUser(User.deserializeUser());
 
 // mongoDB & mongoose
 mongoose.Promise = global.Promise;
-if (process.env.NODE_ENV !== 'test') {
+if(process.env.NODE_ENV !== 'test') {
   mongoose.connect('mongodb://localhost/tallyDB');
 }
 
