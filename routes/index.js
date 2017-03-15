@@ -1,9 +1,9 @@
 const express = require('express');
 
 const router = express.Router();
-const User = require('../models/user.js');
-const Task = require('../models/task.js');
-const helpers = require('../helpers.js');
+const User = require('../models/user');
+const Task = require('../models/task');
+const helpers = require('../helpers');
 
 router.get('/tallies', function(req, res, next) {
   const userId = req.user._id;

@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 const passport = require('passport');
-const User = require('../models/user.js');
+const User = require('../models/user');
 
 router.post('/register', (req, res, next) => {
   User.register(new User({username: req.body.username}), req.body.password, (err, user) => {
