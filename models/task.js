@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const user = mongoose.model('User');
+
 const taskSchema = new mongoose.Schema({
   task: String,
   color: String,
@@ -11,11 +13,13 @@ const taskSchema = new mongoose.Schema({
   user: {type: mongoose.Schema.Types.ObjectId, ref: 'Task'}
 });
 
-// push the new task into user whenever a new task is saved
 taskSchema.post('save', function(next) {
-  const user = mongoose.model('User');
-
   user.update({_id: this.user}, {$push: {tasks: this}})
+    .then(next);
+});
+
+taskSchema.pre('remove', function(next) {
+  user.update({_id: this.user}, {$pull: {tasks: this._id}})
     .then(next);
 });
 
