@@ -374,8 +374,7 @@ html {
 /*fix for ng-if animation on .info*/
 .info.ng-enter,
 .info.ng-leave,
-.info.ng-animate,
-.animation-off {
+.info.ng-animate {
   -webkit-transition: none !important;
   transition: none !important;
 }

@@ -2,17 +2,9 @@
   angular.module('tally25')
 
   .factory('authFactory', ['$q', '$http', function($q, $http) {
-    let showingForm = 'login';
     let user = null;
 
     const factory = {
-      // control which form should be shown or hidden when clicking the login button
-      getForm: function() {
-        return showingForm;
-      },
-      setForm: function(form) {
-        showingForm = form;
-      },
       isLoggedIn: function() {
         if(user) {
           return true;

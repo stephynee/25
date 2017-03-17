@@ -4,8 +4,7 @@
   .controller('loginCtrl', ['$rootScope', 'authFactory', function($rootScope, authFactory) {
     const vm = this;
 
-    vm.showing = false;
-    vm.animateOff = null;
+    vm.showing = true;
 
     vm.login = function() {
       vm.error = false;
@@ -27,15 +26,12 @@
     };
 
     vm.showRegister = function() {
-      vm.animateOff = true;
       vm.showing = false;
-      authFactory.setForm('register');
       $rootScope.$broadcast('register');
     };
 
     $rootScope.$on('login', () => {
-      vm.animateOff = false;
-      vm.showing = !vm.showing;
+      vm.showing = true;
     });
   }])
 
@@ -43,12 +39,9 @@
     const vm = this;
 
     vm.showing = false;
-    vm.animateOff = null;
 
     vm.showLogin = function() {
-      vm.animateOff = true;
       vm.showing = false;
-      authFactory.setForm('login');
       $rootScope.$broadcast('login');
     };
 
@@ -83,14 +76,15 @@
     };
 
     $rootScope.$on('register', () => {
-      vm.animateOff = false;
-      vm.showing = !vm.showing;
+      vm.showing = true;
     });
   }])
 
   .controller('authCtrl', ['$rootScope', 'authFactory', function($rootScope, authFactory) {
     const vm = this;
     let loggedIn;
+
+    vm.showing = false;
 
     function changeStatus() {
       loggedIn = authFactory.isLoggedIn();
@@ -109,7 +103,7 @@
           $rootScope.$broadcast('loggedOut');
         });
       } else{
-        $rootScope.$broadcast(authFactory.getForm());
+        vm.showing = !vm.showing;
       }
     };
 
