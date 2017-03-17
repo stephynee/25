@@ -14,7 +14,7 @@
         showingForm = form;
       },
       isLoggedIn: function() {
-        if (user) {
+        if(user) {
           return true;
         }
 
@@ -34,10 +34,10 @@
 
         $http.post('/api/register', {username: username, password: password})
           .then(data => {
-            if (data.status === 200 && data.status) {
+            if(data.status === 200 && data.status) {
               user = true;
               deferred.resolve();
-            } else {
+            } else{
               user = false;
               deferred.reject({message: 'Something went wrong'});
             }
@@ -54,10 +54,10 @@
 
         $http.post('/api/login', {username: username, password: password})
           .then(data => {
-            if (data.status === 200 && data.status) {
+            if(data.status === 200 && data.status) {
               user = true;
               deferred.resolve();
-            } else {
+            } else{
               user = false;
               deferred.reject({message: 'Something went wrong with the login'});
             }

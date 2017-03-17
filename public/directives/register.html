@@ -1,4 +1,4 @@
-<div class="auth-form" ng-if="registerCtrl.showing">
+<div class="auth-form" ng-if="registerCtrl.showing" ng-class="{'animation-off': registerCtrl.animateOff}">
   <div class="arrow"></div>
   <form ng-submit="registerCtrl.register()">
     <input type="text" placeholder="Username" ng-model="registerCtrl.form.username">

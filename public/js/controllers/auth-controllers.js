@@ -5,6 +5,7 @@
     const vm = this;
 
     vm.showing = false;
+    vm.animateOff = null;
 
     vm.login = function() {
       vm.error = false;
@@ -26,12 +27,14 @@
     };
 
     vm.showRegister = function() {
+      vm.animateOff = true;
       vm.showing = false;
       authFactory.setForm('register');
       $rootScope.$broadcast('register');
     };
 
     $rootScope.$on('login', () => {
+      vm.animateOff = false;
       vm.showing = !vm.showing;
     });
   }])
@@ -40,8 +43,10 @@
     const vm = this;
 
     vm.showing = false;
+    vm.animateOff = null;
 
     vm.showLogin = function() {
+      vm.animateOff = true;
       vm.showing = false;
       authFactory.setForm('login');
       $rootScope.$broadcast('login');
@@ -52,15 +57,15 @@
       vm.disabled = true;
 
       // validate form
-      if (vm.form.password !== vm.form.passwordCheck) {
+      if(vm.form.password !== vm.form.passwordCheck) {
         vm.error = true;
         vm.disabled = false;
         vm.errorMessage = 'Passwords do not match';
-      } else if (!vm.form.username) {
+      } else if(!vm.form.username) {
         vm.error = true;
         vm.disabled = false;
         vm.errorMessage = 'Username cannot be empty';
-      } else {
+      } else{
         authFactory.register(vm.form.username, vm.form.password)
           .then(() => {
             vm.form = {};
@@ -78,6 +83,7 @@
     };
 
     $rootScope.$on('register', () => {
+      vm.animateOff = false;
       vm.showing = !vm.showing;
     });
   }])
@@ -96,13 +102,13 @@
     });
 
     vm.loginLogout = function() {
-      if (loggedIn) {
+      if(loggedIn) {
         authFactory.logout().then(() => {
           vm.buttonText = 'Login';
           loggedIn = false;
           $rootScope.$broadcast('loggedOut');
         });
-      } else {
+      } else{
         $rootScope.$broadcast(authFactory.getForm());
       }
     };

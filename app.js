@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const favicon = require('serve-favicon');
 const session = require('express-session');
 const helpers = require('./helpers');
 
@@ -37,6 +38,7 @@ if(process.env.NODE_ENV !== 'test') {
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/public')));
+app.use(favicon(path.join(__dirname, '/public', 'favicon.ico')));
 
 // routes
 app.use('/api', auth);
