@@ -62,7 +62,7 @@ html {
   position: absolute;
   background-color: #ffffff;
   top: 40px;
-  right: -75px;
+  right: 100;
   max-width: 250px;
   padding: 10px;
   border-radius: 3px;
@@ -98,7 +98,7 @@ html {
   border-bottom: 20px solid #ffffff;
   position: absolute;
   top: -10px;
-  left: 75px;
+  left: 150px;
 }
 
 .auth-form .error {
@@ -108,7 +108,7 @@ html {
   font-size: 0.8rem;
   color: #ffffff;
   border-radius: 3px;
-  margin: 0 auto;
+  : 0 auto;
   padding: 3px;
 }
 
@@ -121,13 +121,17 @@ html {
   flex-wrap: wrap;
   justify-content: space-around;
   max-width: 560px;
-  margin: 0 auto;
+  : 0 auto;
   padding: 0 20px;
 }
 
 .nodata-message {
   color: #565656;
-  margin: 0 auto;
+  : 0 auto;
+}
+
+.nodata-message h2 {
+  font-size: 1rem;
 }
 
 .tally {
@@ -138,14 +142,14 @@ html {
   width: 110px;
   height: 110px;
   border-radius: 5px;
-  margin-bottom: 15px;
+  -bottom: 15px;
   padding: 10px;
   text-align: center;
 }
 
 .tally h2 {
   font-size: 0.9rem;
-  margin: 0;
+  : 0;
 }
 
 .tally-num {
@@ -199,7 +203,7 @@ html {
   flex-basis: 500px;
   position: relative;
   padding:  40px 0;
-  margin: 0 auto;
+  : 0 auto;
   background-color: #ffffff;
   border-radius: 5px;
   text-align: center;
@@ -420,5 +424,17 @@ html {
 
   .login {
     padding-right: 0;
+  }
+
+  .nodata-message h2 {
+    font-size: 1.5rem;
+  }
+
+  .auth-form {
+    right: -75px;
+  }
+
+  .arrow {
+    left: 75px;
   }
 }
