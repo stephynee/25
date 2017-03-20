@@ -20,10 +20,10 @@ router.get('/tallies', function(req, res, next) {
       }
 
       // add tally for current day and then send tasks
-      return Task.update({user: userId}, {$push: {tallies: {}}}, {multi: true});
+      Task.update({user: userId}, {$push: {tallies: {}}}, {multi: true})
+        .then(() => Task.find({user: userId}))
+        .then(tasks => res.json(tasks));
     })
-    .then(() => Task.find({user: userId}))
-    .then(tasks => res.json(tasks))
     .catch(next);
 });
 
