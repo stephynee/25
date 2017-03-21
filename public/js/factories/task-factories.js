@@ -31,6 +31,7 @@
 
   .factory('tallyDataFactory', ['$http', '$rootScope', function($http, $rootScope) {
     let tallyData = [];
+    let showInfo = {};
 
     const factory = {
       getTallyData: function() {
@@ -42,7 +43,7 @@
       pushNew: function(tally) {
         tallyData.push(tally);
 
-        if (tallyData.length === 1) {
+        if(tallyData.length === 1) {
           $rootScope.$broadcast('taskAdded');
         }
       },
@@ -56,7 +57,7 @@
 
         tallyData.splice(i, 1);
 
-        if (tallyData.length === 0) {
+        if(tallyData.length === 0) {
           $rootScope.$broadcast('taskDeleted');
         }
       },
@@ -70,10 +71,21 @@
         const i = tallyData.findIndex(obj => obj._id === id);
         const tally = tallyData[i].tallies[tallyData[i].tallies.length - 1].tally;
 
-        if (tally > 0) {
+        if(tally > 0) {
           tallyData[i].tallies[tallyData[i].tallies.length - 1].tally--;
           $http.put('/api/tallies/decrement', {tallyId: id});
         }
+      },
+      getShowInfo: function(id) {
+        return showInfo[id];
+      },
+      setShowInfo: function(id) {
+        Object.keys(showInfo).forEach(key => {
+          if(key !== id) {
+            showInfo[key] = false;
+          }
+        });
+        showInfo[id] = !showInfo[id];
       }
     };
 
@@ -94,7 +106,7 @@
         return $http.get(url);
       },
       getDateRange: function(range) {
-        if (range.toLowerCase() === 'month') {
+        if(range.toLowerCase() === 'month') {
           const now = new Date();
           const last = new Date(now.getFullYear(), now.getMonth() + 1, 0);
           const daysInMonth = last.getDate();
@@ -120,9 +132,9 @@
         const unitSize = height / max;
 
         // set date range width to match bar width
-        if (tallies.length < 13) {
+        if(tallies.length < 13) {
           rangeWidth = `${width}px`;
-        } else {
+        } else{
           // fix
           rangeWidth = `${width * 6}px`;
         }

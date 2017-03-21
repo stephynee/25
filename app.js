@@ -6,6 +6,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const favicon = require('serve-favicon');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const helpers = require('./helpers');
 
 const User = require('./models/user');
@@ -15,11 +16,18 @@ const index = require('./routes/index');
 
 const app = express();
 
+// mongoDB & mongoose
+mongoose.Promise = global.Promise;
+if(process.env.NODE_ENV !== 'test') {
+  mongoose.connect('mongodb://localhost/tallyDB');
+}
+
 // auth config
 app.use(session({
   secret: 'I am the secret to end all secrets',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: new MongoStore({mongooseConnection: mongoose.connection})
 }));
 
 app.use(passport.initialize());
@@ -27,12 +35,6 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
-// mongoDB & mongoose
-mongoose.Promise = global.Promise;
-if(process.env.NODE_ENV !== 'test') {
-  mongoose.connect('mongodb://localhost/tallyDB');
-}
 
 // middleware & settings
 app.use(bodyParser.urlencoded({extended: true}));

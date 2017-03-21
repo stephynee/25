@@ -107,6 +107,9 @@
       }
     };
 
-    $rootScope.$on('loggedIn', changeStatus);
+    $rootScope.$on('loggedIn', () => {
+      vm.showing = !vm.showing;
+      changeStatus();
+    });
   }]);
 })();

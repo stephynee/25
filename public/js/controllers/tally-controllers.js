@@ -3,23 +3,30 @@
 
   .controller('singleTallyCtrl', ['$rootScope', 'tallyDataFactory', function($rootScope, tallyDataFactory) {
     const vm = this;
+    let id;
 
-    vm.showingInfo = {};
+    vm.showingInfo = function() {
+      return tallyDataFactory.getShowInfo(id);
+    };
 
     vm.showInfo = function(tallyId) {
-      vm.showingInfo[tallyId] = !vm.showingInfo[tallyId];
+      id = tallyId;
+      tallyDataFactory.setShowInfo(tallyId);
     };
 
     vm.editTally = function(tally) {
       $rootScope.$broadcast('editTally', {tallyData: tally});
+      vm.showInfo(tally._id);
     };
 
     vm.showTimer = function(tally) {
       $rootScope.$broadcast('showTimer', {tallyData: tally});
+      vm.showInfo(tally._id);
     };
 
     vm.showData = function(tally) {
       $rootScope.$broadcast('showData', {task: tally.task, id: tally._id});
+      vm.showInfo(tally._id);
     };
 
     vm.increment = tallyDataFactory.increment;
