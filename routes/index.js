@@ -22,7 +22,9 @@ router.get('/tallies', function(req, res, next) {
       // add tally for current day and then send tasks
       Task.update({user: userId}, {$push: {tallies: {}}}, {multi: true})
         .then(() => Task.find({user: userId}))
-        .then(tasks => res.json(tasks));
+        .then(tasks => {
+          res.json(tasks);
+        });
     })
     .catch(next);
 });
@@ -39,8 +41,9 @@ router.post('/tallies', function(req, res, next) {
   User.findById(userId)
     .then(user => {
       newTask.user = user;
-      return newTask.save();
+      return User.update({_id: userId}, {$push: {tasks: newTask}});
     })
+    .then(() => newTask.save())
     .then(savedTask => res.json(savedTask))
     .catch(next);
 });
