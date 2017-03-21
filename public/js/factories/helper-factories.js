@@ -18,13 +18,14 @@
     let time = 25 * 60;
     let pauseTime = null;
     let timePushed = false;
+    let audio = new Audio('/music_marimba_chord.wav');
 
     const factory = {
       startTimer: function(vm, id) {
         let now = Date.now() / 1000;
         let then = now + time;
-
-        if (!timePushed) {
+        
+        if(!timePushed) {
           timePushed = true;
 
           timer = $interval(() => {
@@ -35,7 +36,8 @@
             vm.timeLeft = `${mins}:${secs}`;
             pauseTime = secondsLeft;
 
-            if (secondsLeft < 1) {
+            if(secondsLeft < 1) {
+              audio.play();
               $interval.cancel(timer);
               vm.timeLeft = '25:00';
               tallyDataFactory.increment(id);
@@ -46,7 +48,7 @@
         }
       },
       stopTimer: function(vm) {
-        if (vm) {
+        if(vm) {
           vm.timeLeft = '25:00';
         }
 
@@ -55,7 +57,7 @@
         timePushed = false;
       },
       pauseTimer: function() {
-        if (pauseTime) {
+        if(pauseTime) {
           $interval.cancel(timer);
           time = pauseTime;
           timePushed = false;
