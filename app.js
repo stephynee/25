@@ -46,6 +46,8 @@ app.use(favicon(path.join(__dirname, '/public', 'favicon.ico')));
 app.use('/api', auth);
 app.use('/api', index);
 
+app.get('*', (req, res) => res.redirect('/'));
+
 app.use(helpers.sendError);
 
 module.exports = app;
