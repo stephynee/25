@@ -153,7 +153,7 @@
 
     vm.getRange = function(range) {
       for (var key in vm.selected) {
-        if (vm.selected.hasOwnProperty(key)) {
+        if(vm.selected.hasOwnProperty(key)) {
           vm.selected[key] = false;
         }
       }
@@ -161,10 +161,9 @@
       vm.selected[range.toLowerCase()] = true;
       vm.totalCat = range;
       vm.rangeDates = taskDataFactory.getDateRange(range);
-      vm.monthView = range === 'Month';
 
       taskDataFactory.getRange(range, taskId).then(data => {
-        if (range.toLowerCase() === 'week') {
+        if(range.toLowerCase() === 'week') {
           vm.todayTally = data.data.todayTally;
           vm.todayTime = `${data.data.todayTime.hours} hr ${data.data.todayTime.minutes} min`;
         }

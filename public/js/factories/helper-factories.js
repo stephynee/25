@@ -24,7 +24,7 @@
       startTimer: function(vm, id) {
         let now = Date.now() / 1000;
         let then = now + time;
-        
+
         if(!timePushed) {
           timePushed = true;
 

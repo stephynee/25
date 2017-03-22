@@ -344,6 +344,10 @@ html {
   box-sizing: border-box;
 }
 
+.weekly .dates {
+  font-size: 0.5rem;
+}
+
 /*/////////////////////////////////
           animations
 /////////////////////////////////*/
@@ -436,5 +440,9 @@ html {
 
   .arrow {
     left: 75px;
+  }
+
+  .weekly .dates {
+    font-size: 1rem;
   }
 }
