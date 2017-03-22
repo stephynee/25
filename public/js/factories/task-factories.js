@@ -127,7 +127,7 @@
       buildBars: function(tallies) {
         const barData = tallies;
         const height = document.querySelector('.bars').offsetHeight;
-        const width = (document.querySelector('.bars').offsetHeight / tallies.length) * 0.90;
+        const width = document.querySelector('.bars').offsetWidth;
         const max = Math.max.apply(Math, tallies.map(tally => tally.tally));
         const unitSize = height / max;
 
@@ -135,13 +135,16 @@
         if(tallies.length < 13) {
           rangeWidth = `${width}px`;
         } else{
-          // fix
           rangeWidth = `${width * 6}px`;
         }
 
         barData.forEach(bar => {
-          bar.height = `${(unitSize * bar.tally) * 0.95}px`;
-          bar.width = `${width}px`;
+          // set the height of the bars relative to the size of the bar container
+          const barWidth = (width / tallies.length) * 0.90;
+          const barHeight = (unitSize * bar.tally) * 0.95;
+
+          bar.height = `${(barHeight * 100) / height}%`;
+          bar.width = `${(barWidth * 100) / width}%`;
         });
 
         return barData;
