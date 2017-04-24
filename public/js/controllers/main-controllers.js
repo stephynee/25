@@ -26,7 +26,7 @@ app.controller('tallyCtrl', ['tallyFactory', 'tallyDataFactory', '$rootScope', '
   function showMessage() {
     if (vm.data.length < 1) {
       vm.showMessage = true;
-      vm.message = 'Click the plus to add a task.';
+      vm.message = 'Click the plus to add a task. Tasks are tracked in intervals of 25 minutes.';
     } else {
       vm.showMessage = false;
     }
