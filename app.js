@@ -17,9 +17,12 @@ const index = require('./routes/index');
 const app = express();
 
 // mongoDB & mongoose
+const mDBUser = process.env.MDB_USER;
+const mDBPass = process.env.MDB_PASS;
+
 mongoose.Promise = global.Promise;
 if(process.env.NODE_ENV !== 'test') {
-  mongoose.connect('mongodb://localhost/tallyDB');
+  mongoose.connect(`mongodb://${mDBUser}:${mDBPass}@ds117311.mlab.com:17311/tally25`);
 }
 
 // auth config
