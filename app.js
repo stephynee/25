@@ -8,6 +8,7 @@ const favicon = require('serve-favicon');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const helpers = require('./helpers');
+const config = require('./config.js');
 
 const User = require('./models/user');
 
@@ -17,8 +18,8 @@ const index = require('./routes/index');
 const app = express();
 
 // mongoDB & mongoose
-const mDBUser = process.env.MDB_USER;
-const mDBPass = process.env.MDB_PASS;
+const mDBUser = process.env.MDB_USER || config.mDBUser;
+const mDBPass = process.env.MDB_PASS || config.mDBPass; 
 
 mongoose.Promise = global.Promise;
 if(process.env.NODE_ENV !== 'test') {

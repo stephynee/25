@@ -42,11 +42,10 @@ html {
 
 .login {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   position: relative;
-  max-width: 500px;
+  max-width: 44px;
   margin: 10px auto 0 auto;
-  padding-right: 10%;
 }
 
 .login button {
@@ -98,7 +97,7 @@ html {
   border-bottom: 20px solid #ffffff;
   position: absolute;
   top: -10px;
-  left: 150px;
+  left: 75px;
 }
 
 .auth-form .error {
@@ -427,6 +426,8 @@ html {
   }
 
   .login {
+    justify-content: flex-end;
+    max-width: 500px;
     padding-right: 0;
   }
 
@@ -436,10 +437,6 @@ html {
 
   .auth-form {
     right: -75px;
-  }
-
-  .arrow {
-    left: 75px;
   }
 
   .weekly .dates {
